@@ -66,3 +66,9 @@ end
 
 # Settings
 gem 'rails_config'
+
+# API
+gem 'grape'
+gem 'rabl'
+gem 'grape-rabl'
+gem 'oj'
