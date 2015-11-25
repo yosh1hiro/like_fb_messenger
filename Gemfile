@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+# ruby '2.2.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
@@ -18,8 +19,6 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
@@ -37,6 +36,8 @@ gem 'unicorn'
 group :staging, :development, :test do
   gem 'tapp'
   gem 'awesome_print'
+  gem 'grape-swagger'
+  gem 'grape-swagger-rails'
 end
 
 # rspec test gems
@@ -46,12 +47,15 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'database_cleaner'
   gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'pry-stack_explorer'
   gem 'webmock'
 end
 
 group :test do
   gem 'simplecov', '~> 0.9.0', require: false
   gem 'json_expressions'
+  gem 'autodoc'
 end
 
 gem 'seed-fu'
@@ -62,7 +66,11 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'rubocop', require: false
+  gem 'bullet'
+  gem 'annotate'
 end
+
 
 # Settings
 gem 'rails_config'
