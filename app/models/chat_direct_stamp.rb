@@ -1,9 +1,9 @@
 # == Schema Information
 #
-# Table name: chat_direct_messages
+# Table name: chat_direct_stamps
 #
 #  id                  :integer          not null, primary key
-#  message             :text(65535)      not null
+#  stamp_id            :integer          not null
 #  sender_id           :integer          not null
 #  chat_direct_room_id :integer          not null
 #  created_at          :datetime         not null
@@ -11,10 +11,10 @@
 #
 # Indexes
 #
-#  index_chat_direct_messages_on_chat_direct_room_id  (chat_direct_room_id)
-#  index_chat_direct_messages_on_sender_id            (sender_id)
+#  index_chat_direct_stamps_on_chat_direct_room_id  (chat_direct_room_id)
+#  index_chat_direct_stamps_on_sender_id            (sender_id)
 #
 
-class ChatDirectMessage < ActiveRecord::Base
+class ChatDirectStamp < ActiveRecord::Base
   belongs_to :chat_direct_room
 end
