@@ -11,11 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126094941) do
+ActiveRecord::Schema.define(version: 20151126095153) do
+
+  create_table "chat_direct_messages", force: :cascade do |t|
+    t.text     "message",             limit: 65535
+    t.integer  "sender_id",           limit: 4
+    t.integer  "chat_direct_room_id", limit: 4
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
+
+  add_index "chat_direct_messages", ["chat_direct_room_id"], name: "index_chat_direct_messages_on_chat_direct_room_id", using: :btree
+  add_index "chat_direct_messages", ["sender_id"], name: "index_chat_direct_messages_on_sender_id", using: :btree
 
   create_table "chat_direct_rooms", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "chat_direct_messages", "chat_direct_rooms"
 end
