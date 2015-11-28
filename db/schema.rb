@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151128044826) do
+ActiveRecord::Schema.define(version: 20151128144339) do
 
   create_table "chat_direct_images", force: :cascade do |t|
     t.string   "image",               limit: 255, null: false
@@ -62,6 +62,18 @@ ActiveRecord::Schema.define(version: 20151128044826) do
   add_index "chat_direct_stamps", ["chat_direct_room_id"], name: "index_chat_direct_stamps_on_chat_direct_room_id", using: :btree
   add_index "chat_direct_stamps", ["sender_id"], name: "index_chat_direct_stamps_on_sender_id", using: :btree
 
+  create_table "chat_direct_unread_caches", force: :cascade do |t|
+    t.integer  "chat_direct_room_id", limit: 4,             null: false
+    t.integer  "recipient_id",        limit: 4,             null: false
+    t.datetime "last_read_at",                              null: false
+    t.integer  "unread_count",        limit: 4, default: 0, null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
+  add_index "chat_direct_unread_caches", ["chat_direct_room_id"], name: "index_chat_direct_unread_caches_on_chat_direct_room_id", using: :btree
+  add_index "chat_direct_unread_caches", ["recipient_id"], name: "index_chat_direct_unread_caches_on_recipient_id", using: :btree
+
   create_table "chat_direct_with_admin_from_admin_images", force: :cascade do |t|
     t.string   "image",                          limit: 255, null: false
     t.integer  "chat_direct_with_admin_room_id", limit: 4,   null: false
@@ -88,6 +100,18 @@ ActiveRecord::Schema.define(version: 20151128044826) do
   end
 
   add_index "chat_direct_with_admin_from_admin_stamps", ["chat_direct_with_admin_room_id"], name: "direct_with_admin_from_admin_stamp", using: :btree
+
+  create_table "chat_direct_with_admin_from_admin_unread_caches", force: :cascade do |t|
+    t.integer  "chat_direct_with_admin_room_id", limit: 4,             null: false
+    t.integer  "recipient_id",                   limit: 4,             null: false
+    t.datetime "last_read_at",                                         null: false
+    t.integer  "unread_count",                   limit: 4, default: 0, null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+  end
+
+  add_index "chat_direct_with_admin_from_admin_unread_caches", ["chat_direct_with_admin_room_id"], name: "chat_direct_with_admin_room_index", using: :btree
+  add_index "chat_direct_with_admin_from_admin_unread_caches", ["recipient_id"], name: "chat_direct_with_admin_unread_recipient", using: :btree
 
   create_table "chat_direct_with_admin_images", force: :cascade do |t|
     t.string   "image",                          limit: 255, null: false
@@ -129,9 +153,11 @@ ActiveRecord::Schema.define(version: 20151128044826) do
   add_foreign_key "chat_direct_messages", "chat_direct_rooms"
   add_foreign_key "chat_direct_room_members", "chat_direct_rooms"
   add_foreign_key "chat_direct_stamps", "chat_direct_rooms"
+  add_foreign_key "chat_direct_unread_caches", "chat_direct_rooms"
   add_foreign_key "chat_direct_with_admin_from_admin_images", "chat_direct_with_admin_rooms"
   add_foreign_key "chat_direct_with_admin_from_admin_messages", "chat_direct_with_admin_rooms"
   add_foreign_key "chat_direct_with_admin_from_admin_stamps", "chat_direct_with_admin_rooms"
+  add_foreign_key "chat_direct_with_admin_from_admin_unread_caches", "chat_direct_with_admin_rooms"
   add_foreign_key "chat_direct_with_admin_images", "chat_direct_with_admin_rooms"
   add_foreign_key "chat_direct_with_admin_messages", "chat_direct_with_admin_rooms"
   add_foreign_key "chat_direct_with_admin_stamps", "chat_direct_with_admin_rooms"

@@ -1,0 +1,6 @@
+db:
+  default:
+    host: fi-chat-staging.cdovlarfnsxf.ap-northeast-1.rds.amazonaws.com 
+    port: 3306
+    username: fc_w
+    password: <%= ENV['FI_CHAT_DATABASE_WRITE_PASSWORD'] %>
