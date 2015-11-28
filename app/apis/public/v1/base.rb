@@ -23,6 +23,9 @@ module Public
       end
 
       mount Public::V1::Users
+
+      mount Public::V1::Chats::Rooms
+      mount Public::V1::Chats::Members
     end
   end
 end
