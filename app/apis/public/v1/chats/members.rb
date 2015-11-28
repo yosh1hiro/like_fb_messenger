@@ -1,13 +1,23 @@
 module Public
   module V1
-    class Members < Grape::API
-      resources :chat do
-        resources :rooms do
+    module Chats
+      class Members < Grape::API
+        resources :chat do
           params do
-            requires :room_id, type: Integer
+            requires :user_id, type: Integer
           end
-          route_param :room_id do
-            resources :members do
+          route_param :user_id do
+
+            resources :rooms do
+
+              params do
+                requires :room_id, type: Integer
+              end
+              route_param :room_id do
+                resources :members do
+
+                end
+              end
             end
           end
         end
