@@ -15,4 +15,6 @@
 
 class ChatDirectWithAdminFromAdminImage < ActiveRecord::Base
   belongs_to :chat_direct_with_admin_room
+
+  mount_uploader :image, ImageUploader
 end

@@ -17,4 +17,6 @@
 
 class ChatDirectImage < ActiveRecord::Base
   belongs_to :chat_direct_room
+
+  mount_uploader :image, ImageUploader
 end
