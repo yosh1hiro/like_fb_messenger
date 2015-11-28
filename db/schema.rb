@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151128044517) do
+ActiveRecord::Schema.define(version: 20151128044826) do
 
   create_table "chat_direct_images", force: :cascade do |t|
     t.string   "image",               limit: 255, null: false
@@ -80,6 +80,15 @@ ActiveRecord::Schema.define(version: 20151128044517) do
 
   add_index "chat_direct_with_admin_from_admin_messages", ["chat_direct_with_admin_room_id"], name: "direct_admin_message_from_admin", using: :btree
 
+  create_table "chat_direct_with_admin_from_admin_stamps", force: :cascade do |t|
+    t.integer  "stamp_id",                       limit: 4, null: false
+    t.integer  "chat_direct_with_admin_room_id", limit: 4, null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+  end
+
+  add_index "chat_direct_with_admin_from_admin_stamps", ["chat_direct_with_admin_room_id"], name: "direct_with_admin_from_admin_stamp", using: :btree
+
   create_table "chat_direct_with_admin_images", force: :cascade do |t|
     t.string   "image",                          limit: 255, null: false
     t.integer  "chat_direct_with_admin_room_id", limit: 4,   null: false
@@ -122,6 +131,7 @@ ActiveRecord::Schema.define(version: 20151128044517) do
   add_foreign_key "chat_direct_stamps", "chat_direct_rooms"
   add_foreign_key "chat_direct_with_admin_from_admin_images", "chat_direct_with_admin_rooms"
   add_foreign_key "chat_direct_with_admin_from_admin_messages", "chat_direct_with_admin_rooms"
+  add_foreign_key "chat_direct_with_admin_from_admin_stamps", "chat_direct_with_admin_rooms"
   add_foreign_key "chat_direct_with_admin_images", "chat_direct_with_admin_rooms"
   add_foreign_key "chat_direct_with_admin_messages", "chat_direct_with_admin_rooms"
   add_foreign_key "chat_direct_with_admin_stamps", "chat_direct_with_admin_rooms"
