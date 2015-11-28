@@ -17,4 +17,6 @@
 
 class ChatDirectMessage < ActiveRecord::Base
   belongs_to :chat_direct_room
+
+  validates :message, presence: true
 end
