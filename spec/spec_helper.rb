@@ -7,7 +7,7 @@ require 'factory_girl'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
-ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
+ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
@@ -18,11 +18,11 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
   end
-       
+
   config.before(:each) do
    DatabaseCleaner.start
   end
-    
+
   config.after(:each) do
     DatabaseCleaner.clean
   end
@@ -32,4 +32,7 @@ RSpec.configure do |config|
   end
 
   config.include Requests::JsonHelpers
+
+  config.infer_base_class_for_anonymous_controllers = true
+
 end
