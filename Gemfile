@@ -71,6 +71,9 @@ group :development do
   gem 'annotate'
 end
 
+# Image uploading
+gem 'carrierwave'
+gem 'rmagick'
 
 # Settings
 gem 'rails_config'
