@@ -15,4 +15,6 @@
 
 class ChatDirectWithAdminFromAdminMessage < ActiveRecord::Base
   belongs_to :chat_direct_with_admin_room
+
+  validates :message, presence: true
 end

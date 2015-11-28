@@ -14,4 +14,10 @@
 #
 
 class ChatDirectWithAdminRoom < ActiveRecord::Base
+  has_many :chat_direct_with_admin_messages, dependent: :destroy
+  has_many :chat_direct_with_admin_from_admin_messages, dependent: :destroy
+  has_many :chat_direct_with_admin_images, dependent: :destroy
+  has_many :chat_direct_with_admin_from_admin_images, dependent: :destroy
+  has_many :chat_direct_with_admin_stamps, dependent: :destroy
+  has_many :chat_direct_with_admin_from_admin_stamps, dependent: :destroy
 end
