@@ -7,6 +7,5 @@ class CreateChatDirectImages < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_index :chat_direct_images, :sender_id
   end
 end

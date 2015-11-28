@@ -7,6 +7,5 @@ class CreateChatDirectStamps < ActiveRecord::Migration
 
       t.timestamps null: false
     end
-    add_index :chat_direct_stamps, :sender_id
   end
 end
