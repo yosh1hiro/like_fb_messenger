@@ -9,7 +9,7 @@ module Users
     end
   end
 
-  class User_info
+  class Other
     attr_reader :id, :last_name, :first_name, :image
 
     def initialize(params)
