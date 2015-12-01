@@ -29,11 +29,6 @@ class RequlMobileUsersApi
   def candidates(access_token, page="1", version="v1")
     url = "#{BASE_URL}/#{version}/users/mutually_follows_list"
     request(:get, url, {access_token: access_token, page: page})
-    if response.has_key?(:user)
-      response[:user]
-    else
-      raise ActiveRecord::RecordNotFound
-    end
   end
 
   private

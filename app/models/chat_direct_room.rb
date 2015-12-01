@@ -8,7 +8,7 @@
 #
 
 class ChatDirectRoom < ActiveRecord::Base
-  has_many :chat_direct_room_member, dependent: :destroy
+  has_many :chat_direct_room_members, dependent: :destroy
   has_many :chat_direct_messages, dependent: :destroy
   has_many :chat_direct_images, dependent: :destroy
   has_many :chat_direct_stamp, dependent: :destroy
