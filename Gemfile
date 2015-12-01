@@ -28,8 +28,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Unicorn as the app server
 gem 'unicorn'
 
-gem 'draper'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -51,7 +49,6 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'pry-stack_explorer'
-  gem 'webmock'
 end
 
 group :test do
