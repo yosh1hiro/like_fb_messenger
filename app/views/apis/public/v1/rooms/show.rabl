@@ -1,8 +1,8 @@
 object false
 
 child(@chat_room) do
-  extends 'v1/chats/rooms/_attributes'
-  extends 'v1/chats/_member'
+  extends 'v1/rooms/_attributes'
+  extends 'v1/members'
   node(:current_page) { @page.to_i }
   node(:next_page) { @page.to_i + 1 }
 

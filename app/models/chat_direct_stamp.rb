@@ -12,7 +12,6 @@
 # Indexes
 #
 #  index_chat_direct_stamps_on_chat_direct_room_id  (chat_direct_room_id)
-#  index_chat_direct_stamps_on_sender_id            (sender_id)
 #
 
 class ChatDirectStamp < ActiveRecord::Base

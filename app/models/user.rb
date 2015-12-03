@@ -1,67 +1,65 @@
-module User
+class User
+
   class Me
     include ChatModule
 
-    attr_reader :id, :last_name, :first_name
+    attr_reader :id, :last_name, :first_name, :image, :me
 
-    def initialize
-      @requl_mobile_api = RequlMobileUsersApi.new
+    def initialize(access_token)
+      @requl_mobile_api = RequlMobileUsersApi.new(access_token)
+    end
+
+    def me(version: 'v3')
+      @me ||= @requl_mobile_api.me(version)
+    end
+
+    def last_name
+      me['last_name']
+    end
+
+    def first_name
+      me['first_name']
+    end
+
+    def image
+      me['image']
+    end
+
+    def id
+      me['id']
     end
 
     def to_hash
       {
-        id: @id,
-        last_name: @last_name,
-        first_name: @first_name
+        id: id,
+        last_name: last_name,
+        first_name: first_name,
+        image: image,
       }
     end
 
-    def me(access_token, version="v1")
-      res = @requl_mobile_api.me(access_token, version)
-      @id = res["id"]
-      @last_name = res["last_name"]
-      @first_name = res["first_name"]
+    def candidates(page = 1, version: :v1)
+      return @candidates if @candidates
+      users = @requl_mobile_api.candidates(page, version)
+      @candidates = users["users"].map { |user| Other.new(user) }
     end
 
-    def candidates(access_token, page="1", version="v1")
-      candidates = []
-      users = @requl_mobile_api.candidates(access_token, page, version)
-      users["users"].each { |user| candidates << Other.new(user) }
-      candidates
+    def mutually_follow?(target_user_id, version: :v1)
+      return @mutually_follow if @mutually_follow
+
+      res = @requl_mobile_api.mutually_follow?(target_user_id, version)
+      @mutually_follow = res['mutually_follow']
     end
 
-    def mutually_follow?(access_token, target_user_id, version="v1")
-      res = @requl_mobile_api.mutually_follow?(access_token, target_user_id, version)
-      res["mutually_follow"]
-    end
-  end
+    class Other
+      attr_reader :id, :last_name, :first_name, :image, :user
 
-  class Other
-    attr_reader :id, :last_name, :first_name, :image
-
-    def initialize(params = {})
-      @requl_mobile_api = RequlMobileUsersApi.new
-      @id = params["id"]
-      @last_name = params["last_name"]
-      @first_name = params["first_name"]
-      @image = params["image"]
-    end
-
-    def to_hash
-      {
-        id: @id,
-        last_name: @last_name,
-        first_name: @first_name,
-        image: @image
-      }
-    end
-
-    def othere(access_token, user_id, version="1")
-      res = @requl_mobile_api.user_info(access_token, user_id, version)
-      @id = res["id"]
-      @last_name = res["last_name"]
-      @first_name = res["first_name"]
-      @image = res["image"]
+      def initialize(user_params)
+        @id = user_params['id']
+        @last_name = user_params['last_name']
+        @first_name = user_params['first_name']
+        @image = user_params['image']
+      end
     end
   end
 end

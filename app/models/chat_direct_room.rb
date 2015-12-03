@@ -15,9 +15,8 @@ class ChatDirectRoom < ActiveRecord::Base
   has_one :chat_room_index_caches, as: :chat_room, dependent: :destroy
 
   def self.find_or_create_by(my_user, target_user)
-    direct_room_member = ChatDirectRoomMember.where(my_user_id: my_user.id, target_user_id: target_user.id)
-    if chat_room = direct_room_members.first.try(:chat_direct_room)
-      chat_room
+    if direct_room_member = ChatDirectRoomMember.find_by(my_user_id: my_user.id, target_user_id: target_user.id)
+      direct_room_member.chat_room
     else
       chat_room = ChatDirectRoom.new
       ActiveRecord::Base.transaction do

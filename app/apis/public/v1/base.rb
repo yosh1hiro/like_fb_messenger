@@ -22,10 +22,10 @@ module Public
         error_response(message: 'Internal server error', status: 500)
       end
 
+      mount Public::V1::Members
+      mount Public::V1::Posts
+      mount Public::V1::Rooms
       mount Public::V1::Users
-
-      mount Public::V1::Chats::Rooms
-      mount Public::V1::Chats::Members
     end
   end
 end

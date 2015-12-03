@@ -12,7 +12,6 @@
 # Indexes
 #
 #  index_chat_direct_messages_on_chat_direct_room_id  (chat_direct_room_id)
-#  index_chat_direct_messages_on_sender_id            (sender_id)
 #
 
 class ChatDirectMessage < ActiveRecord::Base

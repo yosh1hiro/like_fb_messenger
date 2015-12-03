@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 20151203152619) do
   end
 
   add_index "chat_direct_images", ["chat_direct_room_id"], name: "index_chat_direct_images_on_chat_direct_room_id", using: :btree
-  add_index "chat_direct_images", ["sender_id"], name: "index_chat_direct_images_on_sender_id", using: :btree
 
   create_table "chat_direct_messages", force: :cascade do |t|
     t.text     "message",             limit: 65535, null: false
@@ -33,7 +32,6 @@ ActiveRecord::Schema.define(version: 20151203152619) do
   end
 
   add_index "chat_direct_messages", ["chat_direct_room_id"], name: "index_chat_direct_messages_on_chat_direct_room_id", using: :btree
-  add_index "chat_direct_messages", ["sender_id"], name: "index_chat_direct_messages_on_sender_id", using: :btree
 
   create_table "chat_direct_room_members", force: :cascade do |t|
     t.integer  "my_user_id",          limit: 4, null: false
@@ -60,7 +58,6 @@ ActiveRecord::Schema.define(version: 20151203152619) do
   end
 
   add_index "chat_direct_stamps", ["chat_direct_room_id"], name: "index_chat_direct_stamps_on_chat_direct_room_id", using: :btree
-  add_index "chat_direct_stamps", ["sender_id"], name: "index_chat_direct_stamps_on_sender_id", using: :btree
 
   create_table "chat_direct_unread_caches", force: :cascade do |t|
     t.integer  "chat_direct_room_id", limit: 4,             null: false
@@ -169,7 +166,7 @@ ActiveRecord::Schema.define(version: 20151203152619) do
     t.string   "name",              limit: 255,                                   null: false
     t.integer  "chat_room_id",      limit: 4,                                     null: false
     t.string   "chat_room_type",    limit: 255,                                   null: false
-    t.datetime "last_sent_at",                    default: '2015-12-03 05:45:28'
+    t.datetime "last_sent_at",                    default: '2015-12-03 17:19:38'
     t.text     "last_sent_message", limit: 65535
     t.datetime "created_at",                                                      null: false
     t.datetime "updated_at",                                                      null: false
