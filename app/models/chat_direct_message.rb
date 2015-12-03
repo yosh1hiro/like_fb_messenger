@@ -17,6 +17,7 @@
 
 class ChatDirectMessage < ActiveRecord::Base
   belongs_to :chat_direct_room
+  has_one :chat_post_cache, as: :postable, dependent: :destroy
 
   validates :message, presence: true
 end

@@ -21,4 +21,6 @@
 #
 
 class ChatPostCache < ActiveRecord::Base
+  belongs_to :chat_room_index_cache
+  belongs_to :postable, polymorphic: true
 end
