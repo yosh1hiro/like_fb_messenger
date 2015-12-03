@@ -55,6 +55,7 @@ group :test do
   gem 'simplecov', '~> 0.9.0', require: false
   gem 'json_expressions'
   gem 'autodoc'
+  gem 'webmock'
 end
 
 gem 'seed-fu'
