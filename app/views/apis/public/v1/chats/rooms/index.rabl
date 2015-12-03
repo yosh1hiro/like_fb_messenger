@@ -1,9 +1,9 @@
 object false
-if @chat_rooms.present?
-  child(@chat_rooms, root: :rooms, object_root: false) do
-    attributes :name, :chat_room_id, :chat_room_type, :last_sent_at, :last_sent_message
-    node(:unread_count) { 0 }
+
+child(@chat_room, root: false, object_root: false) do
+  extends 'v1/chats/rooms/_attributes'
+
+  child(:chat_room_members, root: :members, object_root: false) do
+    attributes :member_id, :member_type, :last_name, :first_name, :image
   end
-else
-  node(:rooms) { [] }
 end

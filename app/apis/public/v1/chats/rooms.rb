@@ -35,6 +35,29 @@ module Public
                 @chat_rooms = me.chat_room_index_caches
               end
 
+              desc 'start direct chat'
+              params do
+                requires :target_id, type: Integer
+                requires :target_type, :type: String
+              end
+              post '/', rabl: 'public/v1/chats/rooms/show' do
+                case params[:target_type]
+                when "User"
+                  @user = User::Other.new.other(params[:access_token], params[:user_id])
+                  fail ActionController::BadRequest if me.id == @user.id
+                  if me.mutually_follow?(params[:access_token], params[:user_id])  # すぐにこの相互followかのjudgeはChatDirectRoomの責務として移譲したい。create時のvalidation
+                    @chat_room = ChatDirectRoom.find_or_create_by(me, @user).chat_room_index_cache
+                  else
+                    fail ActionController::BadRequest
+                  end
+                when "Admin"
+                  # @未実装 => adminの情報をgetするinternal apiの実装とapi clientの実装の必要
+                  @chat_room = ChatDirectWithAdminRoom.find_or_create_by(user_id: me.id, admin_id: 1).chat_room_index_cache
+                else
+                  fail ActionController::BadRequest
+                end
+              end
+
               # params do
               #   requires :chat_room_id, type: Integer
               # end

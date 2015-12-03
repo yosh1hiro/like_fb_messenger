@@ -29,6 +29,11 @@ module User
       users["users"].each { |user| candidates << Other.new(user) }
       candidates
     end
+
+    def mutually_follow?(access_token, target_user_id, version="v1")
+      res = @requl_mobile_api.mutually_follow?(access_token, target_user_id, version)
+      res["mutually_follow"]
+    end
   end
 
   class Other
@@ -51,7 +56,7 @@ module User
       }
     end
 
-    def othere
+    def othere(access_token, user_id, version="1")
       res = @requl_mobile_api.user_info(access_token, user_id, version)
       @id = res["id"]
       @last_name = res["last_name"]
