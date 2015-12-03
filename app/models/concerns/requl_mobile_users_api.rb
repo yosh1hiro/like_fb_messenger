@@ -4,8 +4,8 @@ class RequlMobileUsersApi
   def me(access_token, version="v1")
     url = "#{BASE_URL}/#{version}/users/me"
     response = request(:get, url, { access_token: access_token })
-    if response.has_key?(:user)
-      response[:user]
+    if response.has_key?("user")
+      response["user"]
     else
       raise ActiveRecord::RecordNotFound
     end
@@ -14,8 +14,8 @@ class RequlMobileUsersApi
   def user_info(access_token, user_id, version="v1")
     url = "#{BASE_URL}/#{version}/users/#{user_id}"
     response = request(:get, url, { access_token: access_token, user_id: user_id})
-    if response.has_key?(:user)
-      response[:user]
+    if response.has_key?("user")
+      response["user"]
     else
       raise ActiveRecord::RecordNotFound
     end
@@ -33,7 +33,7 @@ class RequlMobileUsersApi
 
   private
 
-  def self.request(method, url, params)
+  def request(method, url, params)
     JSON.parse(HTTParty.send(method, url, { body: params }).body)
   end
 end
