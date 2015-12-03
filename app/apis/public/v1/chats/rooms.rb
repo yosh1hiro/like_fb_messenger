@@ -17,6 +17,8 @@ module Public
           before do
             fail ActionController::BadRequest if me.nil?
           end
+
+          # client sideとのchat_room_idの受け取りと受け渡しは全て、chat_room_index_cacheのidに統一する
           resources :users do
             desc 'Get users list to start chat'
             params do
@@ -58,48 +60,73 @@ module Public
                 end
               end
 
-              # params do
-              #   requires :chat_room_id, type: Integer
-              # end
-              # route_param :chat_room_id do
-              #   helpers do
-              #     def chat_room
-              #     end
-              #   end
+              params do
+                requires :chat_room_id, type: Integer
+              end
+              route_param :chat_room_id do
+                helpers do
+                  def chat_rooms
+                    @chat_rooms ||= me.chat_room_index_caches
+                  end
 
-              #   before do
-              #     fail ActionController::BadRequest if chat_room.nil?
-              #   end
+                  def chat_room
+                    @chat_room ||= chat_rooms.find(params[:chat_room_id])
+                  end
 
-              #   desc 'Show a chatroom'
-              #   params do
-              #     optional :page, type: Integer, default: 1
-              #     optional :count, type: Integer, default: 20
-              #   end
-              #   get '/', rabl: 'v1/chats/rooms/show' do
-              #     @page = params[:page]
-              #   end
+                  def chat_post_params
+                    ActionController::Parameters.new(params) \
+                        .permit(:stamp_id, :message, :image, :posted_at).merge(sender_id: me.id)
+                  end
+                end
 
-              #   desc 'Create a new message'
-              #   params do
-              #     requires :id, type: Integer
-              #     requires :content_type, type: String
-              #     optional :stamp_id, type: Integer
-              #     optional :message, type: String
-              #     optional :image
-              #     requires :posted_at, type: String
-              #   end
-              #   post '/message', rabl: 'v3/chats/rooms/messages/show' do
-              #   end
+                before do
+                  fail ActionController::BadRequest if chat_room.nil?
+                end
 
-              #   desc 'Show recently posts after parameter date'
-              #   params do
-              #     requires :id, type: Integer
-              #     requires :posted_after, type: String, default: Time.now
-              #   end
-              #   get ':id/latest_posts', rabl: 'v3/chats/rooms/latest_posts' do
-              #   end
-              # end
+                desc 'Show a chatroom'
+                params do
+                  optional :page, type: Integer, default: 1
+                  optional :count, type: Integer, default: 20
+                end
+                get '/', rabl: 'public/v1/chats/rooms/show' do
+                  @chat_room = chat_room
+                  @page = params[:page]
+                end
+
+                desc 'Create a new message'
+                params do
+                  requires :content_type, type: String
+                  optional :stamp_id, type: Integer
+                  optional :message, type: String
+                  optional :image
+                  requires :posted_at, type: String
+                end
+                post '/message', rabl: 'public/v1/chats/rooms/message' do
+                  room = chat_room.chat_room
+                  case params[:content_type]
+                  when 'message'
+                    fail ActionController::BadRequest if params[:message].blank?
+                    @chat_post = room.chat_direct_messages.new(chat_post_params)
+                  when 'stamp'
+                    fail ActionController::BadRequest if params[:stamp_id].blank?
+                    @chat_post = room.chat_direct_stamps.new(chat_post_params)
+                  when 'image'
+                    fail ActionController::BadRequest if params[:image].blank?
+                    @chat_post = room.chat_direct_images.new(chat_post_params)
+                  else
+                    fail ActionController::BadRequest
+                  end
+                  @chat_post.save!
+                end
+
+                desc 'Show recently posts after parameter date'
+                params do
+                  requires :id, type: Integer
+                  requires :posted_after, type: String, default: Time.now
+                end
+                get ':id/latest_posts', rabl: 'v3/chats/rooms/latest_posts' do
+                end
+              end
             end
           end
         end
