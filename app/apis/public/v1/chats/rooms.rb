@@ -124,7 +124,9 @@ module Public
                   requires :id, type: Integer
                   requires :posted_after, type: String, default: Time.now
                 end
-                get ':id/latest_posts', rabl: 'v3/chats/rooms/latest_posts' do
+                get ':id/latest_posts', rabl: 'public/v1/chats/rooms/latest_posts' do
+                  @chat_room = chat_room
+                  @chat_posts = @chat_room.chat_post_caches.where(ChatPostCache.arel_table[:posted_at].gteq params[:posted_after]).order(posted_at: :asc)
                 end
               end
             end
