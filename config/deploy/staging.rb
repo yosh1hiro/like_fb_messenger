@@ -1,5 +1,5 @@
 set :stage, :staging
-set :branch, 'feature/setup-capistrano'
+set :branch, 'master'
 set :rbenv_type, :user
 set :rbenv_ruby, '2.2.3'
 set :rails_env, 'staging'
