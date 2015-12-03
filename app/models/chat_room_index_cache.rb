@@ -18,4 +18,5 @@
 #
 
 class ChatRoomIndexCache < ActiveRecord::Base
+  belongs_to :chat_room, polymorphic: true
 end

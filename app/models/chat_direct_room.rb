@@ -12,4 +12,5 @@ class ChatDirectRoom < ActiveRecord::Base
   has_many :chat_direct_messages, dependent: :destroy
   has_many :chat_direct_images, dependent: :destroy
   has_many :chat_direct_stamp, dependent: :destroy
+  has_one :chat_room_index_caches, as: :chat_room, dependent: :destroy
 end

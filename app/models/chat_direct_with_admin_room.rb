@@ -20,4 +20,5 @@ class ChatDirectWithAdminRoom < ActiveRecord::Base
   has_many :chat_direct_with_admin_from_admin_images, dependent: :destroy
   has_many :chat_direct_with_admin_stamps, dependent: :destroy
   has_many :chat_direct_with_admin_from_admin_stamps, dependent: :destroy
+  has_one :chat_room_index_caches, as: :chat_room, dependent: :destroy
 end
