@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151128144339) do
+ActiveRecord::Schema.define(version: 20151203045511) do
 
   create_table "chat_direct_images", force: :cascade do |t|
     t.string   "image",               limit: 255, null: false
@@ -148,6 +148,19 @@ ActiveRecord::Schema.define(version: 20151128144339) do
   end
 
   add_index "chat_direct_with_admin_stamps", ["chat_direct_with_admin_room_id"], name: "direct_with_admin_stamp", using: :btree
+
+  create_table "chat_room_index_caches", force: :cascade do |t|
+    t.string   "name",              limit: 255,                                   null: false
+    t.integer  "chat_room_id",      limit: 4,                                     null: false
+    t.string   "chat_room_type",    limit: 255,                                   null: false
+    t.datetime "last_sent_at",                    default: '2015-12-03 05:45:28'
+    t.text     "last_sent_message", limit: 65535
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
+  end
+
+  add_index "chat_room_index_caches", ["chat_room_id"], name: "chattable_id", using: :btree
+  add_index "chat_room_index_caches", ["chat_room_type"], name: "chattable_type", using: :btree
 
   add_foreign_key "chat_direct_images", "chat_direct_rooms"
   add_foreign_key "chat_direct_messages", "chat_direct_rooms"
