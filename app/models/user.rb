@@ -38,16 +38,21 @@ class User
       }
     end
 
+    def other_user(id)
+      user = @requl_mobile_api.user_info(id)
+      @other = Other.new(user)
+    end
+
     def candidates(page = 1, version: :v1)
       return @candidates if @candidates
       users = @requl_mobile_api.candidates(page, version)
       @candidates = users["users"].map { |user| Other.new(user) }
     end
 
-    def mutually_follow?(target_user_id, version: :v1)
+    def mutually_follow?(target_user_id)
       return @mutually_follow if @mutually_follow
 
-      res = @requl_mobile_api.mutually_follow?(target_user_id, version)
+      res = @requl_mobile_api.mutually_follow?(target_user_id)
       @mutually_follow = res['mutually_follow']
     end
 

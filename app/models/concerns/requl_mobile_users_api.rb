@@ -26,18 +26,14 @@ class RequlMobileUsersApi
     end
   end
 
-  def mutually_follow?(target_user_id, version: :v3)
-    # FIXME
-    url = "#{BASE_URL}/#{version}/users/confirm_mutually_follow"
-    # request(:get, url, { access_token: @access_token, target_user_id: target_user_id })
-    true
+  def mutually_follow?(target_user_id, version: :v1)
+    url = "#{INTERNAL_BASE_URL}/#{version}/follows/confirm_mutually_follow"
+    request(:get, url, { access_token: @access_token, target_user_id: target_user_id })
   end
 
   def candidates(page = 1, version: :v1)
-    # FIXME
-    url = "#{BASE_URL}/#{version}/users/mutually_follows_list"
-    # request(:get, url, { access_token: @access_token, page: page })
-    []
+    url = "#{INTERNAL_BASE_URL}/#{version}/follows/mutually_follows_list"
+    request(:get, url, { access_token: @access_token, page: page })
   end
 
   private

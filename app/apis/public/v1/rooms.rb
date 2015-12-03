@@ -8,7 +8,7 @@ module Public
         end
 
         def other
-          @other ||= User::Other.new(params[:access_token], params[:user_id])
+          @other ||= User::Me.new(params[:access_token]).other_user(params[:user_id])
         end
       end
 
@@ -29,13 +29,12 @@ module Public
         params do
           requires :user_id, type: Integer
         end
-        post '/', rabl: 'public/v1/rooms/show' do
+        post '/', rabl: 'public/v1/rooms/create' do
           fail ActionController::BadRequest if me.id == other.id
-          if me.mutually_follow?(other.id)  # すぐにこの相互followかのjudgeはChatDirectRoomの責務として移譲したい。create時のvalidation
-            @chat_room = ChatDirectRoom.find_or_create_by(me, other).chat_room_index_cache
-          else
-            fail ActionController::BadRequest
-          end
+          # すぐにこの相互followかのjudgeはChatDirectRoomの責務として移譲したい。create時のvalidation
+          fail ActionController::BadRequestif unless me.mutually_follow?(other.id)
+
+          @chat_room = ChatDirectRoom.find_or_create_by(me, other)#.chat_room_index_cache
         end
 
         params do

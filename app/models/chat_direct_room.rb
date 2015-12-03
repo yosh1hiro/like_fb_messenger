@@ -16,7 +16,7 @@ class ChatDirectRoom < ActiveRecord::Base
 
   def self.find_or_create_by(my_user, target_user)
     if direct_room_member = ChatDirectRoomMember.find_by(my_user_id: my_user.id, target_user_id: target_user.id)
-      direct_room_member.chat_room
+      direct_room_member.chat_direct_room
     else
       chat_room = ChatDirectRoom.new
       ActiveRecord::Base.transaction do
