@@ -40,7 +40,7 @@ module Public
               desc 'start direct chat'
               params do
                 requires :target_id, type: Integer
-                requires :target_type, :type: String
+                requires :target_type, type: String
               end
               post '/', rabl: 'public/v1/chats/rooms/show' do
                 case params[:target_type]
