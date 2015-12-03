@@ -1,13 +1,3 @@
-deployment:
-  production:
-    branch: 'deploy/production'
-    commands:
-      - .circle/deploy_production.rb
-  staging:
-    branch: 'deploy/staging'
-    commands:
-      - .circle/deploy_staging.rb
-
 dependencies:
   pre:
     - sudo pip install awscli
@@ -18,8 +8,6 @@ database:
     - mysql -u root -e 'set global innodb_file_per_table = 1'
     - mysql -u root -e 'set global innodb_large_prefix = 1'
     - export RAILS_ENV=test; export RACK_ENV=test; bundle exec rake db:migrate:reset --trace
-  pre:
-    - .circle/concat_genetic_schema.sh
 
 machine:
   timezone:
