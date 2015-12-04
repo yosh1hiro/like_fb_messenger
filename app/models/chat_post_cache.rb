@@ -14,6 +14,8 @@
 #  posted_at                :datetime         not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  chat_room_id             :integer
+#  chat_room_type           :string(255)
 #
 # Indexes
 #
@@ -21,6 +23,11 @@
 #
 
 class ChatPostCache < ActiveRecord::Base
+  paginates_per 10
+  attr_accessor :sender
+
   belongs_to :chat_room_index_cache
   belongs_to :postable, polymorphic: true
+  belongs_to :chat_room, polymorphic: true
+
 end

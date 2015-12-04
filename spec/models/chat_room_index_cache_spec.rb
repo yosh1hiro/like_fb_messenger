@@ -10,6 +10,7 @@
 #  last_sent_message :text(65535)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  target_type       :string(255)
 #
 # Indexes
 #

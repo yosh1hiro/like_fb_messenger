@@ -4,11 +4,11 @@ module Public
 
       helpers do
         def me
-          @me ||= User::Me.new(params[:access_token])
+          @me ||= FiChat::Member::User.me(params[:access_token])
         end
 
         def other
-          @other ||= User::Me.new(params[:access_token]).other_user(params[:user_id])
+          @other ||= FiChat::Member::User.find(params[:user_id], params[:access_token])
         end
       end
 
@@ -22,7 +22,8 @@ module Public
       resources :rooms do
         desc 'Get all chat_room list'
         get '/', rabl: 'public/v1/rooms/index' do
-          @chat_rooms = me.chat_room_index_caches
+          s = ChatDirectRoomService.new(me)
+          @chat_rooms = s.chat_direct_rooms
         end
 
         desc 'Start direct chat'
@@ -32,9 +33,13 @@ module Public
         post '/', rabl: 'public/v1/rooms/create' do
           fail ActionController::BadRequest if me.id == other.id
           # すぐにこの相互followかのjudgeはChatDirectRoomの責務として移譲したい。create時のvalidation
-          fail ActionController::BadRequestif unless me.mutually_follow?(other.id)
+          fail ActionController::BadRequestif unless me.mutually_follow?(other)
 
-          @chat_room = ChatDirectRoom.find_or_create_by(me, other)#.chat_room_index_cache
+          chat_room = ChatDirectRoom.find_or_create_by(me, other)
+          s = ChatDirectRoomPostService.new(me, chat_room.id, params[:page], params[:count])
+          @chat_room = s.chat_direct_room
+          @chat_posts = s.chat_posts
+          @members = s.members
         end
 
         params do
@@ -47,7 +52,7 @@ module Public
             end
 
             def chat_room
-              @chat_room ||= chat_rooms.find(params[:chat_room_id])
+              @chat_room ||= chat_rooms.find_by(chat_room_id: params[:chat_room_id])
             end
           end
 
@@ -57,8 +62,11 @@ module Public
             optional :count, type: Integer, default: 20
           end
           get '/', rabl: 'public/v1/rooms/show' do
-            @chat_room = chat_room
             @page = params[:page]
+            s = ChatDirectRoomPostService.new(me, params[:chat_room_id], params[:page], params[:count])
+            @chat_room = s.chat_direct_room
+            @chat_posts = s.chat_posts
+            @members = s.members
           end
 
           desc 'Show recently posts after parameter date'
@@ -67,7 +75,10 @@ module Public
             requires :posted_after, type: Time, default: Time.now
           end
           get '/latest_posts', rabl: 'public/v1/rooms/latest_posts' do
-            @chat_posts = ChatPostCache.where('posted_at > ?', params[:posted_after])
+            s = ChatDirectRoomPostedAfterService.new(me, params[:chat_room_id], params[:posted_after])
+            @chat_room = s.chat_direct_room
+            @chat_posts = s.chat_posts
+            @members = s.members
           end
         end
       end

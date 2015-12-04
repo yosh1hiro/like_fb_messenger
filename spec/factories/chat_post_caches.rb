@@ -14,6 +14,8 @@
 #  posted_at                :datetime         not null
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  chat_room_id             :integer
+#  chat_room_type           :string(255)
 #
 # Indexes
 #

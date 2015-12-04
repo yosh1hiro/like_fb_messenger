@@ -36,6 +36,13 @@ class RequlMobileUsersApi
     request(:get, url, { access_token: @access_token, page: page })
   end
 
+  class << self
+    def users(ids, version: :v1)
+      url = "#{INTERNAL_BASE_URL}/#{version}/users/list"
+      JSON.parse(HTTParty.send(:get, url, { body: { user_ids: ids }}).body)
+    end
+  end
+
   private
 
     def request(method, url, params)

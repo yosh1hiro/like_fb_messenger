@@ -7,7 +7,7 @@ module Public
 
       helpers do
         def me
-          @me ||= User::Me.new(params[:access_token])
+          @me ||= FiChat::Member::User.me(params[:access_token])
         end
 
         def chat_room
@@ -26,7 +26,7 @@ module Public
         desc 'Create a new message'
         params do
           requires :content_type, type: String
-          requires :room_id
+          requires :room_id, type: Integer
           optional :stamp_id, type: Integer
           optional :message, type: String
           optional :image
@@ -42,7 +42,7 @@ module Public
           when 'image'
             fail ActionController::BadRequest if params[:image].blank?
             @chat_post = chat_room.chat_direct_images.new(chat_post_params)
-            @chat_post.image = image
+            @chat_post.image = params[:image]
           else
             fail ActionController::BadRequest
           end

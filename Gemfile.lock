@@ -150,6 +150,9 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     json_expressions (0.8.3)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.9.3)
     libv8 (3.16.14.7)
     listen (2.10.0)
@@ -348,6 +351,7 @@ DEPENDENCIES
   httparty
   jquery-rails
   json_expressions
+  kaminari
   mysql2 (>= 0.3.13, < 0.5)
   oj
   pry-byebug

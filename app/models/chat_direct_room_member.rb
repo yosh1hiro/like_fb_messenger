@@ -17,4 +17,5 @@
 
 class ChatDirectRoomMember < ActiveRecord::Base
   belongs_to :chat_direct_room
+
 end

@@ -10,6 +10,7 @@
 #  last_sent_message :text(65535)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  target_type       :string(255)
 #
 # Indexes
 #
@@ -18,6 +19,27 @@
 #
 
 class ChatRoomIndexCache < ActiveRecord::Base
+  attr_accessor :room_name, :room_image
+
   belongs_to :chat_room, polymorphic: true
   has_many :chat_post_caches
+  has_many :chat_direct_room_members, foreign_key: :chat_direct_room_id, primary_key: :chat_room_id
+
+  def name
+    case chat_room_type
+    when 'ChatDirectRoom'
+      room_name
+    else
+      [:name]
+    end
+  end
+
+  def image
+    case chat_room_type
+    when 'ChatDirectRoom'
+      room_image
+    else
+      [:name]
+    end
+  end
 end

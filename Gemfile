@@ -84,3 +84,5 @@ gem 'rabl'
 gem 'grape-rabl'
 gem 'oj'
 gem 'httparty'
+
+gem 'kaminari'
