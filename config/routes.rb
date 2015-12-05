@@ -55,4 +55,5 @@ Rails.application.routes.draw do
   #   end
   resource :health_check, only: [:show]
   mount API => '/'
+  mount GrapeSwaggerRails::Engine => '/docs'
 end

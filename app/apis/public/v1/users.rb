@@ -7,12 +7,12 @@ module Public
         desc 'Get users list to start chat'
         params do
           requires :page, type: Integer, default: 1
+          requires :access_token, type: String
         end
         get 'candidates', rabl: 'public/v1/users/candidates' do
           @page = params[:page]
           @next_page = @page + 1
           @users = FiChat::Member::User.candidates(@page, params[:access_token])
-          ap @users
         end
       end
     end

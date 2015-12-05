@@ -26,6 +26,12 @@ module Public
       mount Public::V1::Posts
       mount Public::V1::Rooms
       mount Public::V1::Users
+
+      add_swagger_documentation(
+        api_version: 'v1',
+        format: 'json',
+        mount_path: '/docs'
+      ) unless Rails.env.production?
     end
   end
 end

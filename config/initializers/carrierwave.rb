@@ -1,4 +1,4 @@
-unless Rails.env.test?
+if Rails.env.staging? || Rails.env.production?
   CarrierWave.configure do |config|
     config.cache_dir = "#{Rails.root}/tmp/uploads"
     config.storage                          = :fog

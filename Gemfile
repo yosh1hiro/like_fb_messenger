@@ -38,6 +38,7 @@ group :staging, :development, :test do
   gem 'awesome_print'
   gem 'grape-swagger'
   gem 'grape-swagger-rails'
+  gem 'kramdown'
 end
 
 # rspec test gems

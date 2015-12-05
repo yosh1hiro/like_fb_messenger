@@ -11,3 +11,4 @@ aws:
 
 requl_mobile:
   api_base_url: <%= ENV['API_URL'] %>]
+  application_token: <%= ENV['APPLICATIONT_TOKEN_FOR_REQUL_MOBILE'] %>
