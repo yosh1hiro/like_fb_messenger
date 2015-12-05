@@ -1,10 +1,13 @@
 db:
   default:
-    host: fi-chat-staging.cdovlarfnsxf.ap-northeast-1.rds.amazonaws.com 
+    host: <%= ENV['HOST'] %> 
     port: 3306
-    username: fc_w
-    password: <%= ENV['FI_CHAT_DATABASE_WRITE_PASSWORD'] %>
+    username: <%= ENV['USERNAME'] %>
+    password: <%= ENV['DATABASE_WRITE_PASSWORD'] %>
 
 aws:
   access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
   secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+
+requl_mobile:
+  api_base_url: <%= ENV['API_URL'] %>]
