@@ -74,6 +74,8 @@ end
 # Image uploading
 gem 'carrierwave'
 gem 'rmagick'
+gem 'fog'
+gem 'unf'
 
 # Settings
 gem 'rails_config'
