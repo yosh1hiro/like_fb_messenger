@@ -53,5 +53,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  resource :health_check, only: [:show]
   mount API => '/'
 end
