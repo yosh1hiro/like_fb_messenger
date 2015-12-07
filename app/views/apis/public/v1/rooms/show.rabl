@@ -16,6 +16,7 @@ child(@chat_room, root: :chat_room) do
   else
     node(:messages) { [] }
   end
-  node(:current_page) { @page.to_i }
-  node(:next_page) { @page.to_i + 1 }
+  node(:current_page) { @page }
+  node(:next_page) { @next_page }
+  node(:end_flag) { @end_flag }
 end
