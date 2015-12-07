@@ -1,6 +1,6 @@
 object false
 
-child(@chat_room) do
+child(@chat_room, root: :chat_room) do
   extends 'public/v1/rooms/_attributes'
   extends 'public/v1/members/_attributes'
 
