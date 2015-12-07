@@ -20,10 +20,17 @@ module Public
         requires :access_token, type: String
       end
       resources :rooms do
+        params do
+          optional :page, type: Integer, default: 1
+          optional :count, type: Integer, default: 20
+        end
         desc 'Get all chat_room list'
         get '/', rabl: 'public/v1/rooms/index' do
-          s = ChatDirectRoomService.new(me)
+          @page = params[:page].to_i
+          @next_page = @page + 1
+          s = ChatDirectRoomService.new(me, @page, params[:count])
           @chat_rooms = s.chat_direct_rooms
+          @end_flag = @chat_rooms.blank?
         end
 
         desc 'Start direct chat'

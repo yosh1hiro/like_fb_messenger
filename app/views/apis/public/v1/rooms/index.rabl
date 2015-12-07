@@ -7,3 +7,6 @@ if @chat_rooms.present?
 else
   node(:chat_rooms) { [] }
 end
+node(:current_page) { @page }
+node(:next_page) { @next_page }
+node(:end_flag) { @end_flag }
