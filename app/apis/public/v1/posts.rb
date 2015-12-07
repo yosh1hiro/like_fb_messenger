@@ -46,6 +46,7 @@ module Public
           else
             fail ActionController::BadRequest
           end
+          @chat_post.sender = me
           @chat_post.save!
         end
       end
