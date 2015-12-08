@@ -36,18 +36,22 @@ module Public
           when 'message'
             fail ActionController::BadRequest if params[:message].blank?
             @chat_post = chat_room.chat_direct_messages.new(chat_post_params)
+            @chat_post.sender = me
+            @chat_post.save_with_cache!
           when 'stamp'
             fail ActionController::BadRequest if params[:stamp_id].blank?
             @chat_post = chat_room.chat_direct_stamps.new(chat_post_params)
+            @chat_post.sender = me
+            @chat_post.save_with_cache!
           when 'image'
             fail ActionController::BadRequest if params[:image].blank?
             @chat_post = chat_room.chat_direct_images.new(chat_post_params)
             @chat_post.image = params[:image]
+            @chat_post.sender = me
+            @chat_post.save_with_cache!
           else
             fail ActionController::BadRequest
           end
-          @chat_post.sender = me
-          @chat_post.save!
         end
       end
     end

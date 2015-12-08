@@ -20,4 +20,19 @@ class ChatDirectMessage < ActiveRecord::Base
   has_one :chat_post_cache, as: :postable, dependent: :destroy
 
   validates :message, presence: true
+
+  def save_with_cache!
+    save!
+    cache!
+  end
+
+  def cache!
+    build_chat_post_cache(
+      chat_room: chat_direct_room,
+      sender_id: sender.id,
+      sender_type: sender.type,
+      message: message,
+      posted_at: created_at,
+    ).save!
+  end
 end

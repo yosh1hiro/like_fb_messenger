@@ -3,15 +3,15 @@
 # Table name: chat_post_caches
 #
 #  id                       :integer          not null, primary key
-#  chat_room_index_cache_id :integer          not null
-#  postable_id              :integer          not null
-#  postable_type            :string(255)      not null
-#  sender_id                :integer          not null
-#  sender_type              :string(255)      not null
+#  chat_room_index_cache_id :integer
+#  postable_id              :integer
+#  postable_type            :string(255)
+#  sender_id                :integer
+#  sender_type              :string(255)
 #  message                  :text(65535)
 #  image                    :string(255)
 #  stamp_id                 :integer
-#  posted_at                :datetime         not null
+#  posted_at                :datetime
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  chat_room_id             :integer
