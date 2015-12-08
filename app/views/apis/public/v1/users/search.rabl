@@ -1,7 +1,7 @@
 object false
 if @users
   child(@users, root: :users, object_root: false) do
-    attributes :id, :last_name, :first_name, :name, :image
+    extends 'public/v1/members/_attributes'
   end
 else
   node(:users) { [] }
