@@ -30,7 +30,7 @@ module Public
           @next_page = @page + 1
           s = ChatDirectRoomService.new(me, @page, params[:count])
           @chat_rooms = s.chat_direct_rooms
-          @end_flag = @chat_rooms.blank?
+          @end_flag = (@chat_rooms.count != params[:count])
         end
 
         desc 'Start direct chat'
