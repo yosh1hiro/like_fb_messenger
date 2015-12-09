@@ -10,7 +10,9 @@ module WithAdmin
       @chat_direct_room.room_name = admin.name
       @chat_direct_room.room_image = admin.image
       @chat_posts = @chat_room.chat_post_caches.order(posted_at: :desc).page(post_page).per(post_count).sort_by(&:posted_at)
-      @members = [me, admin]
+      members = FiChat::Members.new([me, admin])
+      @members = members.members
+      @chat_posts.each { |p| p.sender = members.find_by_type(p.sender_type, p.sender_id) }
       @chat_direct_room
     end
 
@@ -19,10 +21,6 @@ module WithAdmin
       def admin
         @admin = FiChat::Member::Admin.new({ 'id' => 1, 'last_name' => 'sample', 'first_name' => 'admin' }) # TODO: implement
         @admin ||= FiChat::Member::Admin.find(@chat_room.admin_id)
-      end
-
-      def member_id
-        @member_id ||= ChatDirectRoomMember.find_by(chat_direct_room_id: @chat_direct_room.chat_room_id, my_user_id: @me.id).target_user_id
       end
   end
 end
