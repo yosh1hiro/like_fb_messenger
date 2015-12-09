@@ -2,4 +2,4 @@ db:
   default:
     username: #'YOUR DB USERNAME HERE'
     password: #'YOUR DB PASSWORD HERE'
-    #socket: /tmp/mysql.sock
+    socket: /tmp/mysql.sock
