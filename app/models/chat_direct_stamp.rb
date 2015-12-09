@@ -22,6 +22,7 @@ class ChatDirectStamp < ActiveRecord::Base
   def save_with_cache!
     save!
     cache!
+    update_room_cache!
   end
 
   def cache!
@@ -31,6 +32,16 @@ class ChatDirectStamp < ActiveRecord::Base
       sender_type: sender.type,
       stamp_id: stamp_id,
       posted_at: created_at,
+      last_sent_at: created_at,
     ).save!
+  end
+
+  def update_room_cache!
+    ChatRoomIndexCache.find_by(chat_room: chat_direct_room)
+      .try(
+        :update,
+        last_sent_at: created_at,
+        last_sent_message: I18n.t('chat_room_index_cache.last_sent_message_template.stamp_sent', name: sender.name)
+      )
   end
 end
