@@ -15,6 +15,7 @@ module Public
       mount Public::V1::Users
 
       mount Public::V1::WithAdmin::Posts
+      mount Public::V1::WithAdmin::Rooms
 
       add_swagger_documentation(
         api_version: 'v1',
