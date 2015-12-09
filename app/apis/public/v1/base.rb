@@ -19,7 +19,13 @@ module Public
       end
 
       rescue_from :all do |e|
-        error_response(message: 'Internal server error', status: 500)
+        Rails.logger.fatal(e)
+
+        if Rails.env.production?
+          error_response(message: "Internal server error", status: 500)
+        else
+          error_response(message: e.message, status: 500)
+        end
       end
 
       mount Public::V1::Members
