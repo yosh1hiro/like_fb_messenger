@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title
+      |FiChat
+    = stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  body
+    .l-wrapper
+      //sidebar
+      .l-sidebar
+        |sidebarだお
+      .l-container
+        //header
+        .header
+          |Hederだお
+        = yield
+  

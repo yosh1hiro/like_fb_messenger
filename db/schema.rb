@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 20151208045403) do
     t.string   "name",              limit: 255,                                   null: false
     t.integer  "chat_room_id",      limit: 4,                                     null: false
     t.string   "chat_room_type",    limit: 255,                                   null: false
-    t.datetime "last_sent_at",                    default: '2015-12-03 17:19:38'
+    t.datetime "last_sent_at",                    default: '2015-12-09 03:00:29'
     t.text     "last_sent_message", limit: 65535
     t.datetime "created_at",                                                      null: false
     t.datetime "updated_at",                                                      null: false
