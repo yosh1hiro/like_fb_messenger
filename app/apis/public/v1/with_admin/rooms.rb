@@ -42,6 +42,26 @@ module Public
               @chat_posts = s.chat_posts
               @members = s.members
             end
+
+            params do
+              requires :chat_room_id, type: Integer
+            end
+            route_param :chat_room_id do
+              desc 'Show a chatroom'
+              params do
+                optional :page, type: Integer, default: 1
+                optional :count, type: Integer, default: 20
+              end
+              get '/', rabl: 'public/v1/rooms/show' do
+                @page = params[:page]
+                @next_page = @page + 1
+                s = ::WithAdmin::ChatDirectRoomPostService.new(current_user, params[:chat_room_id], params[:page], params[:count])
+                @chat_room = s.chat_direct_room
+                @chat_posts = s.chat_posts
+                @members = s.members
+                @end_flag = @chat_posts.blank?
+              end
+            end
           end
         end
       end
