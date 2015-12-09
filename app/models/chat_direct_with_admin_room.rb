@@ -26,12 +26,20 @@ class ChatDirectWithAdminRoom < ActiveRecord::Base
     'Admin'
   end
 
+  def cache!(options = {})
+    build_chat_room_index_cache(
+      name: options[:name],
+      target_type: target_type
+    ).save!
+  end
+
   class << self
     def find_or_create_by(user, admin)
       chat_room = ChatDirectWithAdminRoom.find_or_initialize_by(user_id: user.id, admin_id: admin.id)
       return chat_room if chat_room.persisted?
 
       chat_room.save!
+      chat_room.cache!(name: "#{user.name} / #{admin.name}")
       chat_room
     end
   end
