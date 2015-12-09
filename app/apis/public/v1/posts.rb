@@ -2,14 +2,14 @@ module Public
   module V1
     class Posts < Grape::API
       params do
-        requires :access_token, type: String
+        optional :access_token, type: String
+      end
+
+      before do
+        authenticate_user!
       end
 
       helpers do
-        def me
-          @me ||= FiChat::Member::User.me(params[:access_token])
-        end
-
         def chat_room
           @chat_room ||= ChatDirectRoom.find(params[:room_id])
         end
@@ -19,7 +19,7 @@ module Public
         helpers do
           def chat_post_params
             ActionController::Parameters.new(params) \
-              .permit(:stamp_id, :message).merge(sender_id: me.id)
+              .permit(:stamp_id, :message).merge(sender_id: current_user.id)
           end
         end
 
