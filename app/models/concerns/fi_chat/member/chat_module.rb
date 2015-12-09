@@ -13,6 +13,10 @@ module FiChat
       def chat_room_index_caches
         ChatRoomIndexCache.where(chat_room: direct_chat_rooms)
       end
+
+      def chat_room_with_admin_index_caches
+        ChatRoomIndexCache.where(chat_room: direct_admin_chat_rooms)
+      end
     end
   end
 end
