@@ -1,0 +1,5 @@
+ja:
+  chat_room_index_cache:
+    last_sent_message_template:
+      stamp_sent: "%{name}がスタンプを送信しました。"
+      image_sent: "%{name}が画像を送信しました。"

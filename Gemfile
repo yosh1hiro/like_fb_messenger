@@ -97,3 +97,5 @@ gem 'oj'
 gem 'httparty'
 
 gem 'kaminari'
+
+gem 'rails-i18n'
