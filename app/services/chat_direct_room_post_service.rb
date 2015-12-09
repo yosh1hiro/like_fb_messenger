@@ -8,7 +8,7 @@ class ChatDirectRoomPostService
     @chat_direct_room = @me.chat_room_index_caches.find_by(chat_room: chat_room)
     @chat_direct_room.room_name = user.name
     @chat_direct_room.room_image = user.image
-    @chat_posts = chat_room.chat_post_caches.order(posted_at: :desc).page(post_page).per(post_count)
+    @chat_posts = chat_room.chat_post_caches.order(posted_at: :desc).page(post_page).per(post_count).sort_by(&:posted_at)
     senders = chat_room.senders
     @chat_posts.each { |p| p.sender = senders.users_list[p.sender_id] }
     @members = senders.members
