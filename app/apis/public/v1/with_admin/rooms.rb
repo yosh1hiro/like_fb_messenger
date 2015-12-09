@@ -76,6 +76,18 @@ module Public
             end
           end
         end
+
+        namespace :with_csc do
+          desc 'Start direct chat with CSC'
+          post '/rooms', rabl: 'public/v1/rooms/create' do
+            csc = FiChat::Member::Admin.new({ 'id' => 20120410, 'last_name' => 'customer', 'first_name' => 'support' }) # TODO: implement
+            chat_room = ChatDirectWithAdminRoom.find_or_create_by(current_user, csc)
+            s = ::WithAdmin::ChatDirectRoomPostService.new(current_user, chat_room.id, params[:page], params[:count])
+            @chat_room = s.chat_direct_room
+            @chat_posts = s.chat_posts
+            @members = s.members
+          end
+        end
       end
     end
   end
