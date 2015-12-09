@@ -61,6 +61,18 @@ module Public
                 @members = s.members
                 @end_flag = @chat_posts.blank?
               end
+
+              desc 'Show recently posts after parameter date'
+              params do
+                requires :chat_room_id, type: Integer
+                requires :posted_after, type: Time, default: Time.now
+              end
+              get '/latest_posts', rabl: 'public/v1/rooms/latest_posts' do
+                s = ::WithAdmin::ChatDirectRoomPostedAfterService.new(current_user, params[:chat_room_id], params[:posted_after])
+                @chat_room = s.chat_direct_room
+                @chat_posts = s.chat_posts
+                @members = s.members
+              end
             end
           end
         end
