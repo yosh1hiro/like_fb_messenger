@@ -9,6 +9,7 @@ module Public
 
           helpers do
             def target_admin
+              @target_admin = FiChat::Member::Admin.new({ 'id' => 1, 'last_name' => 'sample', 'first_name' => 'admin' }) # TODO: implement
               @target_admin ||= FiChat::Member::Admin.find(params[:admin_id])
             end
           end
@@ -35,8 +36,7 @@ module Public
               requires :admin_id, type: Integer
             end
             post '/', rabl: 'public/v1/rooms/create' do
-              admin = FiChat::Member::Admin.new({ 'id' => 1, 'last_name' => 'sample', 'first_name' => 'admin' }) # TODO: implement
-              chat_room = ChatDirectWithAdminRoom.find_or_create_by(current_user, admin)
+              chat_room = ChatDirectWithAdminRoom.find_or_create_by(current_user, target_admin)
               s = ::WithAdmin::ChatDirectRoomPostService.new(current_user, chat_room.id, params[:page], params[:count])
               @chat_room = s.chat_direct_room
               @chat_posts = s.chat_posts
