@@ -32,7 +32,6 @@ class ChatDirectStamp < ActiveRecord::Base
       sender_type: sender.type,
       stamp_id: stamp_id,
       posted_at: created_at,
-      last_sent_at: created_at,
     ).save!
   end
 

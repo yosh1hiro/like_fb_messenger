@@ -33,7 +33,6 @@ class ChatDirectImage < ActiveRecord::Base
       sender_type: sender.type,
       image: image,
       posted_at: created_at,
-      last_sent_at: created_at,
     ).save!
   end
 

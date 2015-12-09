@@ -34,7 +34,6 @@ class ChatDirectMessage < ActiveRecord::Base
       sender_type: sender.type,
       message: message,
       posted_at: created_at,
-      last_sent_at: created_at,
     ).save!
   end
 
