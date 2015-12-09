@@ -1,4 +1,4 @@
-worker_processes 6
+worker_processes 3
 
 application_path = '/var/www/fi_chat'
 current_path = "#{application_path}/current"
