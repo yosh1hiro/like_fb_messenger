@@ -27,7 +27,7 @@ class ChatRoomIndexCache < ActiveRecord::Base
 
   def name
     case chat_room_type
-    when 'ChatDirectRoom'
+    when 'ChatDirectRoom', 'ChatDirectWithAdminRoom'
       room_name
     else
       [:name]
@@ -36,10 +36,10 @@ class ChatRoomIndexCache < ActiveRecord::Base
 
   def image
     case chat_room_type
-    when 'ChatDirectRoom'
+    when 'ChatDirectRoom', 'ChatDirectWithAdminRoom'
       room_image
     else
-      [:name]
+      {}
     end
   end
 end
