@@ -3,21 +3,17 @@ module Public
     class Rooms < Grape::API
 
       helpers do
-        def me
-          @me ||= FiChat::Member::User.me(params[:access_token])
-        end
-
         def other
-          @other ||= FiChat::Member::User.find(params[:user_id], params[:access_token])
+          @other ||= FiChat::Member::User.find(params[:user_id], access_token)
         end
       end
 
       before do
-        fail ActionController::BadRequest if me.nil?
+        fail ActionController::BadRequest if current_user.nil?
       end
 
       params do
-        requires :access_token, type: String
+        optional :access_token, type: String
       end
       resources :rooms do
         params do
@@ -28,7 +24,7 @@ module Public
         get '/', rabl: 'public/v1/rooms/index' do
           @page = params[:page].to_i
           @next_page = @page + 1
-          s = ChatDirectRoomService.new(me, @page, params[:count])
+          s = ChatDirectRoomService.new(current_user, @page, params[:count])
           @chat_rooms = s.chat_direct_rooms
           @end_flag = (@chat_rooms.count != params[:count])
         end
@@ -38,12 +34,12 @@ module Public
           requires :user_id, type: Integer
         end
         post '/', rabl: 'public/v1/rooms/create' do
-          fail ActionController::BadRequest if me.id == other.id
+          fail ActionController::BadRequest if current_user.id == other.id
           # すぐにこの相互followかのjudgeはChatDirectRoomの責務として移譲したい。create時のvalidation
-          fail ActionController::BadRequestif unless me.mutually_follow?(other)
+          fail ActionController::BadRequestif unless current_user.mutually_follow?(other)
 
-          chat_room = ChatDirectRoom.find_or_create_by(me, other)
-          s = ChatDirectRoomPostService.new(me, chat_room.id, params[:page], params[:count])
+          chat_room = ChatDirectRoom.find_or_create_by(current_user, other)
+          s = ChatDirectRoomPostService.new(current_user, chat_room.id, params[:page], params[:count])
           @chat_room = s.chat_direct_room
           @chat_posts = s.chat_posts
           @members = s.members
@@ -55,7 +51,7 @@ module Public
         route_param :chat_room_id do
           helpers do
             def chat_rooms
-              @chat_rooms ||= me.chat_room_index_caches
+              @chat_rooms ||= current_user.chat_room_index_caches
             end
 
             def chat_room
@@ -71,7 +67,7 @@ module Public
           get '/', rabl: 'public/v1/rooms/show' do
             @page = params[:page]
             @next_page = @page + 1
-            s = ChatDirectRoomPostService.new(me, params[:chat_room_id], params[:page], params[:count])
+            s = ChatDirectRoomPostService.new(current_user, params[:chat_room_id], params[:page], params[:count])
             @chat_room = s.chat_direct_room
             @chat_posts = s.chat_posts
             @members = s.members
@@ -84,7 +80,7 @@ module Public
             requires :posted_after, type: Time, default: Time.now
           end
           get '/latest_posts', rabl: 'public/v1/rooms/latest_posts' do
-            s = ChatDirectRoomPostedAfterService.new(me, params[:chat_room_id], params[:posted_after])
+            s = ChatDirectRoomPostedAfterService.new(current_user, params[:chat_room_id], params[:posted_after])
             @chat_room = s.chat_direct_room
             @chat_posts = s.chat_posts
             @members = s.members
