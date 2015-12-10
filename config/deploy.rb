@@ -3,14 +3,14 @@ set :repo_url, 'git@github.com:FiNCDeveloper/fi_chat.git'
 
 set :deploy_to, "/var/www/#{fetch(:application)}"
 
-#set :deploy_via, :remote_cache
+set :deploy_via, :remote_cache
 
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # whenever
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
-set :whenever_roles, :cron
-set :whenever_environment, "#{fetch(:stage)}"
+# set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+# set :whenever_roles, :cron
+# set :whenever_environment, "#{fetch(:stage)}"
 
 set :unicorn_stop_sleep_time, 3
 

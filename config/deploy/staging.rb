@@ -4,7 +4,7 @@ set :rbenv_type, :user
 set :rbenv_ruby, '2.2.3'
 set :rails_env, 'staging'
 set :unicorn_rack_env, 'staging'
-set :bundle_without,  [:development, :test, :heroku_staging, :staging]
+set :bundle_without,  [:development, :test, :heroku_staging]
 
 set :application_server_addrs, [
   '52.192.29.79'

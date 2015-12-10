@@ -37,7 +37,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'unicorn'
 
 # Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv', github: "capistrano/rbenv"
+  gem 'capistrano-bundler'
+  gem 'capistrano3-unicorn'
+  gem 'capistrano-faster-assets'
+end
 
 # Debug
 # rspec test gems
