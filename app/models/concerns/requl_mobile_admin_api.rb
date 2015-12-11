@@ -22,6 +22,18 @@ class RequlMobileAdminApi
     request(:get, url, { admin_ids: ids, access_token: @access_token, application_token: APPLICATION_TOKEN })
   end
 
+  class << self
+    def access_token(email, password, version: :v1)
+      url = "#{INTERNAL_BASE_URL}/#{version}/admins/sign_in"
+      response = JSON.parse(HTTParty.send(:post, url, { body: { email: email, password: password, application_token: APPLICATION_TOKEN } }).body)
+      if response.key?('admin')
+        response['admin']['access_token']
+      else
+        fail ActiveRecord::RecordNotFound
+      end
+    end
+  end
+
   private
 
     def request(method, url, params)
