@@ -1,3 +1,0 @@
-module FrontTestHelper
-
-end

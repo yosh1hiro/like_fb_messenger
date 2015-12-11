@@ -1,0 +1,162 @@
+//
+// =vertical-center-for-one-line($height)
+//   height: $height
+//   line-height: $height
+//
+// =vertical-center
+//   display: table-cell
+//   vertical-align: middle
+//
+// =position($position, $top: null, $right: null, $bottom: null, $left: null)
+//   bottom: $bottom
+//   left: $left
+//   position: $position
+//   right: $right
+//   top: $top
+//
+// =absolute($args...)
+//   +position(absolute, $args...)
+//
+// =relative($args...)
+//   +position(relative, $args...)
+//
+// =fixed($args...)
+//   +position(fixed, $args...)
+//
+// =static
+//   +position(static)
+//
+// =calc($property, $expression, $fallback: 100%)
+//   #{$property}: $fallback
+//   #{$property}: -moz-calc(#{$expression})
+//   #{$property}: -webkit-calc(#{$expression})
+//   #{$property}: calc(#{$expression})
+//
+// =link-background-colors($normal: $white_color, $hover: false, $active: false, $visited: false, $focus: false, $is_active: false)
+//   background-color: $normal
+//   @if $visited
+//     &:visited
+//       background-color: $visited
+//   @if $focus
+//     &:focus
+//       background-color: $focus
+//   @if $hover
+//     &:hover
+//       background-color: $hover
+//   @if $active
+//     &:active
+//       background-color: $active
+//   @if $is_active
+//     &.active
+//       background-color: $is_active
+//
+// =triangle($direction: top, $color: $border_color, $size: 2px)
+//   @if not index(top right bottom left, $direction)
+//     @error "Direction must be either `top`, `right`, `bottom` or `left`."
+//   width: 0
+//   height: 0
+//   content: ''
+//   z-index: 10
+//   border-#{opposite-position($direction)}: $size * 1.5 solid $color
+//   $perpendicular-borders: $size solid transparent
+//   @if $direction == top or $direction == bottom
+//     border-left: $perpendicular-borders
+//     border-right: $perpendicular-borders
+//   @else if $direction == right or $direction == left
+//     border-bottom: $perpendicular-borders
+//     border-top: $perpendicular-borders
+//
+// =vh-center($width: 100%, $min_height: false)
+//   height: 100%
+//   text-align: center
+//   min-width: $width
+//   @if $min_height
+//     min-height: $min_height
+//   &:before
+//     content: ""
+//     display: inline-block
+//     height: 100%
+//     vertical-align: middle
+//   & > *
+//     display: inline-block
+//     vertical-align: middle
+//
+// =scroll($width: none, $height: none)
+//   overflow: auto
+//   & > *
+//     min-height: $height
+//     min-width: $width
+//
+// // display: tableとその直下の要素にdisplay: table-cell, vertical-align: middleをかけて均等な余白を取る。主にPC用。
+// =table-and-cell-padding($padding: $default_space * 3, $full_width: false, $last_align_right: false)
+//   display: table
+//   @if $full_width
+//     width: 100%
+//   > *
+//     padding-right: $padding
+//     &:last-child
+//       padding-right: 0
+//       @if $last_align_right
+//         text-align: right
+//     +vertical-center
+//
+// // 正方形
+// =square($size)
+//   height: $size
+//   width: $size
+//
+// // 正円形
+// =circle($size)
+//   border-radius: $size / 2
+//   +square($size)
+//
+// // ぶら下げインデント
+// =hanging-indent($hanging_size: 1.2em)
+//   padding-left: $hanging_size
+//   text-indent: $hanging_size * -1
+//
+// =tap-highlight-color($color: rgba($base_color, 0.2))
+//   -webkit-tap-highlight-color: $color
+//
+// // ステップバー用の矢印[ > ]
+// =arrow-for-stepbar($arrow_deg: angle, $arrow_color: color)
+//   &:before,
+//   &:after
+//     background-color: $bg_color
+//     border-left: $default_space + 2 solid $arrow_color
+//     content: ''
+//     height: $default_space * 6
+//     left: ($default_space - 1px) * -1
+//     +absolute
+//   &:after
+//     top: 0
+//     +skew($arrow_deg)
+//   &:before
+//     bottom: 0
+//     +skew($arrow_deg * -1)
+//   &:first-child
+//     +border-left-radius($default_space)
+//     &:before,
+//     &:after
+//       content: none
+//   &:last-child
+//     +border-right-radius($default_space)
+//
+// // メディアクエリ
+// $bootstrap_bp_md: 1199px
+// $bootstrap_bp_sm: 991px
+// $bootstrap_bp_xs: 767px
+//
+// =mq($bp)
+//   @if $bp == md
+//     @media screen and (max-width: $bootstrap_bp_md)
+//       @content
+//   @else if $bp == sm
+//     @media screen and (max-width: $bootstrap_bp_sm)
+//       @content
+//   @else if $bp == xs
+//     @media screen and (max-width: $bootstrap_bp_xs)
+//       @content
+//   @else
+//     @media screen and (max-width: $bp)
+//       @content

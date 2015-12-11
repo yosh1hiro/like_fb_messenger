@@ -10,7 +10,14 @@ module FiChat
   class Application < Rails::Application
     config.paths.add File.join('app', 'apis'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'apis', '*')]
-    config.generators.template_engine = :slim 
+    config.generators.template_engine = :slim
+
+    #cssのコンパイル先
+    css_dir = "stylesheets"
+    #sassファイルの保存先
+    sass_dir = "sass"
+
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

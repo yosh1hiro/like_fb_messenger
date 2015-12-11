@@ -1,32 +1,27 @@
+
+
 .l-wrapper,
 .l-container,
 .l-content-block
   height: 100%
 
 .l-wrapper
-  -webkit-overflow-scrolling: touch
-  overflow-x: hidden
   width: 100%
 
 .l-container
 
+.l-main_contents
+  margin-left: $sidebar_width
 
 .l-sidebar
   background-color: #454545
-  // border-right: 1px solid $border_color
-  // +calc('height', "100% - #{$header_height}")
-  overflow-y: visible
-  width: $default_space * 57
+  // overflow-y: visible
+  width: $sidebar_width
   z-index: 1000
-//   +fixed($top: $header_height, $left: 0)
-//   +mq(md)
-//     width: auto
-//   +mq(sm)
-//     display: none
-//     width: $sidebar_width
+
 //   &.active
 //     display: block
-// //
+
 
 //
 // .l-content-block

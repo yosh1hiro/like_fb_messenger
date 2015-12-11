@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ShosemaruController, type: :controller do
+RSpec.describe FrontTestController, type: :controller do
 
   describe "GET #test" do
     it "returns http success" do
