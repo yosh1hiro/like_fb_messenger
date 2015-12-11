@@ -3,12 +3,13 @@ class RequlMobileAdminApi
   INTERNAL_BASE_URL = "#{Settings.requl_mobile.api_base_url}/internal"
   APPLICATION_TOKEN = Settings.requl_mobile.application_token
 
-  def initialize
+  def initialize(access_token)
+    @access_token = access_token
   end
 
   def admin_info(admin_id, version: :v1)
     url = "#{INTERNAL_BASE_URL}/#{version}/admins/#{admin_id}"
-    response = request(:get, url, { application_token: APPLICATION_TOKEN })
+    response = request(:get, url, { access_token: @access_token, application_token: APPLICATION_TOKEN })
     if response.key?('admin')
       response['admin']
     else
@@ -16,11 +17,9 @@ class RequlMobileAdminApi
     end
   end
 
-  class << self
-    def admins(ids, version: :v1)
-      url = "#{INTERNAL_BASE_URL}/#{version}/admins/list"
-      JSON.parse(HTTParty.send(:get, url, { body: { admin_ids: ids, application_token: APPLICATION_TOKEN } }).body)
-    end
+  def admins(ids, version: :v1)
+    url = "#{INTERNAL_BASE_URL}/#{version}/admins/list"
+    request(:get, url, { admin_ids: ids, access_token: @access_token, application_token: APPLICATION_TOKEN })
   end
 
   private
