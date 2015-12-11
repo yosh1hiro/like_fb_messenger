@@ -1,75 +1,13 @@
-
-
-.l-wrapper,
-.l-container,
-.l-content-block
-  height: 100%
-
-.l-wrapper
-  width: 100%
-
 .l-container
-
-.l-main_contents
   margin-left: $sidebar_width
 
+.l_header
+  height: $header_height
+  border-bottom: 1px solid
+
 .l-sidebar
-  background-color: #454545
-  // overflow-y: visible
+  background-color: $sidebar_color
+  color: #fff
+  height: 100%
+  position: fixed
   width: $sidebar_width
-  z-index: 1000
-
-//   &.active
-//     display: block
-
-
-//
-// .l-content-block
-//   background-color: $white_color
-//   margin-left: $sidebar_width
-//   min-height: 100%
-//   +mq(md)
-//     margin-left: $sidebar_md_width
-//   +mq(sm)
-//     margin-left: 0
-//   +m(sp)
-//     +static
-//   &.active
-//     opacity: 0.5
-//     overflow: hidden
-//   > .title
-//     border-bottom: 1px solid $border_color
-//     color: $base_color
-//     font-size: $font_size_heading
-//     padding: $default_space * 3 $default_space * 6
-//     +m(sp)
-//       background-color: $white_color
-//       font-size: $font_size_default
-//       text-align: center
-//       width: 100%
-//       z-index: 1000
-//       +absolute($top: 0)
-//
-//
-// .l-single-content-block
-//   background-color: $white_color
-//   min-height: 100%
-//
-// .l-main-container
-//   background-color: $bg_color
-//   +m(white)
-//     background-color: $white_color
-//
-// .l-main-content
-//   $breadcrumbs_height: $default_space * 11
-//   $title_height: $default_space * 17
-//   background-color: $bg_color
-//   height: 100%
-//   padding: $default_space * 5 $default_space * 6
-//   +m(breadcrumb)
-//     +calc("height", "100% - #{ $breadcrumbs_height + $title_height }")
-//   +m(white)
-//     background-color: $white_color
-//   +mq(xs)
-//     padding: $default_space * 4 $default_space * 3
-//

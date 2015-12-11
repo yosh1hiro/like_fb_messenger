@@ -1,5 +1,19 @@
-//hoge
 @charset 'utf-8'
+
+
+//
+//boorstrap
+//
+
+@import 'bootstrap-sprockets'
+@import 'bootstrap'
+@import 'bootstrap/bootstrap_and_overrides'
+
+
+//
+//others
+//
+
 @import 'compass'
 
 
@@ -8,6 +22,7 @@
 //
 
 @import 'base/reset'
+@import 'base/mixin'
 @import 'base/base'
 @import 'base/utility'
 
@@ -17,20 +32,3 @@
 //
 
 @import 'layout/layout'
-
-
-//
-//boorstrap
-//
-
-@import 'bootstrap-sprockets'
-@import 'bootstrap'
-
-
-
-
-//あとで消す
-.header
-  height: $header_height
-  background-color: #000
-  color: #fff

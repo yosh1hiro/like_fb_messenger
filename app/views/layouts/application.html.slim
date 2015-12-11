@@ -8,13 +8,14 @@ html
     = csrf_meta_tags
   body
     .l-wrapper
-      //header
-      .header
-        |Hederだお
       //sidebar
+      .l-sidebar
+        |sidebar
       .l-container
-        .l-sidebar
-          |sidebarだお
         .l-main_contents
+          //header
+          .l_header
+            |Heder
+        
           = yield
   
