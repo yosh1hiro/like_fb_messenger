@@ -8,6 +8,8 @@ gem 'rails', '4.2.5'
 gem 'mysql2', '>= 0.3.13', '< 0.5'
 
 gem 'slim-rails'
+gem 'html2slim'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass'

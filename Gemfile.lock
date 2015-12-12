@@ -203,6 +203,9 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     hashie (3.4.2)
     hitimes (1.2.2)
+    hpricot (0.8.6)
+    html2slim (0.2.0)
+      hpricot
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -435,6 +438,7 @@ DEPENDENCIES
   grape-swagger
   grape-swagger-rails
   guard-rspec
+  html2slim
   httparty
   jquery-rails
   json_expressions
