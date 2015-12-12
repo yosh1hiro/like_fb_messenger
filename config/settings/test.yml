@@ -3,3 +3,7 @@ db:
     username: #'YOUR DB USERNAME HERE'
     password: #'YOUR DB PASSWORD HERE'
     socket: /tmp/mysql.sock
+
+requl_mobile:
+  api_base_url: ''
+  application_token: fiaccessgrant
