@@ -7,7 +7,7 @@ describe Public::V1::Admins, type: :request do
     let(:url) { '/v1/admins/sign_in' }
     let(:params) { { email: admin[:email], password: admin[:password] } }
     before do
-      allow(RequlMobileAdminApi).to receive(:access_token).with(admin[:email], admin[:password])
+      allow(RequlMobileAdminsApi).to receive(:access_token).with(admin[:email], admin[:password])
         .and_return(access_token)
       post url, params
     end

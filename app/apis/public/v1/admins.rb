@@ -8,7 +8,7 @@ module Public
           requires :password, type: String
         end
         post 'sign_in', rabl: 'public/v1/admins/sign_in' do
-          @access_token = RequlMobileAdminApi.access_token(params[:email], params[:password])
+          @access_token = RequlMobileAdminsApi.access_token(params[:email], params[:password])
         end
       end
     end

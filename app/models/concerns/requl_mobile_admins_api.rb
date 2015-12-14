@@ -1,4 +1,4 @@
-class RequlMobileAdminApi
+class RequlMobileAdminsApi
   BASE_URL = "#{Settings.requl_mobile.api_base_url}"
   INTERNAL_BASE_URL = "#{Settings.requl_mobile.api_base_url}/internal"
   APPLICATION_TOKEN = Settings.requl_mobile.application_token

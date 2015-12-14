@@ -14,10 +14,10 @@ describe FiChat::Member::Admin do
 
   describe '.find' do
     it 'admin instance is created' do
-      allow_any_instance_of(RequlMobileAdminApi).to receive(:request)
+      allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
         .with(:get,
-              "#{RequlMobileAdminApi::INTERNAL_BASE_URL}/v1/admins/#{admin['admin']['id']}",
-              { access_token: access_token, application_token: RequlMobileAdminApi::APPLICATION_TOKEN })
+              "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/#{admin['admin']['id']}",
+              { access_token: access_token, application_token: RequlMobileAdminsApi::APPLICATION_TOKEN })
         .and_return(admin)
       member = FiChat::Member::Admin.find(admin['admin']['id'], access_token)
       expect(member).to be_instance_of(FiChat::Member::Admin)
@@ -30,13 +30,13 @@ describe FiChat::Member::Admin do
   describe '.find_list' do
     context 'request admin_ids are exist' do
       it 'admin instances are created' do
-        allow_any_instance_of(RequlMobileAdminApi).to receive(:request)
+        allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
           .with(:get,
-                "#{RequlMobileAdminApi::INTERNAL_BASE_URL}/v1/admins/list",
+                "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/list",
                 {
                   admin_ids: [admins['admins'][0]['id'], admins['admins'][1]['id']],
                   access_token: access_token,
-                  application_token: RequlMobileAdminApi::APPLICATION_TOKEN
+                  application_token: RequlMobileAdminsApi::APPLICATION_TOKEN
                 })
           .and_return(admins)
         members = FiChat::Member::Admin.find_list([admins['admins'][0]['id'], admins['admins'][1]['id']], access_token)
@@ -54,13 +54,13 @@ describe FiChat::Member::Admin do
     end
     context 'request admin_id are not exist neither' do
       it 'admin instance are not created' do
-        allow_any_instance_of(RequlMobileAdminApi).to receive(:request)
+        allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
           .with(:get,
-                "#{RequlMobileAdminApi::INTERNAL_BASE_URL}/v1/admins/list",
+                "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/list",
                 {
                   admin_ids: [admins['admins'][0]['id'], admins['admins'][1]['id']],
                   access_token: access_token,
-                  application_token: RequlMobileAdminApi::APPLICATION_TOKEN
+                  application_token: RequlMobileAdminsApi::APPLICATION_TOKEN
                 })
           .and_return({ 'admins' => [] })
         members = FiChat::Member::Admin.find_list([admins['admins'][0]['id'], admins['admins'][1]['id']], access_token)
