@@ -17,11 +17,10 @@ module Public
           desc 'Start direct chat'
           params do
             requires :user_id, type: Integer
-            requires :admin_id, type: Integer
           end
           post '/', rabl: 'public/v1/admins/rooms/create' do
             user = FiChat::Member::User.find_list([params[:user_id]]).first
-            admin = FiChat::Member::Admin.find(params[:admin_id], params[:access_token])
+            admin = FiChat::Member::Admin.me(params[:access_token])
             fail ActionController::BadRequest if user.blank? || admin.blank?
 
             @chat_room = ChatDirectWithAdminRoom.find_or_create_by(user, admin)

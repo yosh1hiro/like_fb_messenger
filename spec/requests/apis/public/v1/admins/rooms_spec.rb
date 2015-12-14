@@ -2,17 +2,20 @@ require 'spec_helper'
 
 describe Public::V1::Admins::Rooms, type: :request do
   let(:access_token) { 'accesstoken' }
-  let(:admin) { { 'admin' => { 'id' => 1, 'first_name' => 'first_name', 'last_name' => 'last_name' } } }
+  let(:admin) do
+    { 'admin' => { 'id' => 1, 'first_name' => 'first_name', 'last_name' => 'last_name', 'access_token' => access_token } }
+  end
   let(:users) do
     { 'users' => [{ 'id' => 1, 'first_name' => 'first_name1', 'last_name' => 'last_name1' }] }
   end
+
   describe 'POST /' do
     let(:url) { '/v1/admins/rooms' }
     let(:params) { { user_id: users['users'][0]['id'], admin_id: admin['admin']['id'], access_token: access_token } }
     before do
       allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
         .with(:get,
-              "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/#{admin['admin']['id']}",
+              "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/me",
               { access_token: access_token, application_token: RequlMobileAdminsApi::APPLICATION_TOKEN })
         .and_return(admin)
     end
