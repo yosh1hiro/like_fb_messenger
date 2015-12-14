@@ -7,6 +7,16 @@ class RequlMobileAdminsApi
     @access_token = access_token
   end
 
+  def me(version: :v1)
+    url = "#{INTERNAL_BASE_URL}/#{version}/admins/me"
+    response = request(:get, url, { access_token: @access_token, application_token: APPLICATION_TOKEN })
+    if response.key?('admin')
+      response['admin']
+    else
+      fail ActiveRecord::RecordNotFound
+    end
+  end
+
   def admin_info(admin_id, version: :v1)
     url = "#{INTERNAL_BASE_URL}/#{version}/admins/#{admin_id}"
     response = request(:get, url, { access_token: @access_token, application_token: APPLICATION_TOKEN })

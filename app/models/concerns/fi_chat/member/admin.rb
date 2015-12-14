@@ -6,6 +6,11 @@ module FiChat
       end
 
       class << self
+        def me(access_token)
+          me = RequlMobileAdminsApi.new(access_token).me
+          ::FiChat::Member::Admin.new(me)
+        end
+
         def find(id, access_token)
           admin = RequlMobileAdminsApi.new(access_token).admin_info(id)
           ::FiChat::Member::Admin.new(admin)
