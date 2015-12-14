@@ -20,19 +20,47 @@ describe Public::V1::Admins::Rooms, type: :request do
       before do
         allow(RequlMobileUsersApi).to receive(:users).with([users['users'][0]['id']])
           .and_return(users)
-        post url, params
       end
-      it { expect(response.status).to eq 201 }
-      it { expect(json['chat_room']['user_id']).to eq users['users'][0]['id'] }
-      it { expect(json['chat_room']['admin_id']).to eq admin['admin']['id'] }
+      it 'returns status code 200' do
+        post url, params
+        expect(response.status).to eq 201
+      end
+      it 'creates ChatDirectWithAdminRoom record' do
+        expect {
+          post url, params
+        }.to change(ChatDirectWithAdminRoom, :count).by(1)
+        room = ChatDirectWithAdminRoom.find_by(user_id: users['users'][0]['id'], admin_id: admin['admin']['id'])
+        expect(room).to be_truthy
+      end
+      it 'creates ChatRoomIndexCache record' do
+        expect {
+          post url, params
+        }.to change(ChatRoomIndexCache, :count).by(1)
+        room = ChatDirectWithAdminRoom.find_by(user_id: users['users'][0]['id'], admin_id: admin['admin']['id'])
+        expect(room.chat_room_index_cache).to be_truthy
+      end
+      it 'returns json response' do
+        post url, params
+        expect(json['chat_room']['user_id']).to eq users['users'][0]['id']
+        expect(json['chat_room']['admin_id']).to eq admin['admin']['id']
+      end
     end
     context 'not return user from requl_mobile' do
       before do
         allow(RequlMobileUsersApi).to receive(:users).with([users['users'][0]['id']])
           .and_return({})
-        post url, params
       end
-      it { expect(response.status).to eq 400 }
+      it 'returns status code 400' do
+        post url, params
+        expect(response.status).to eq 400
+      end
+      it 'creates ChatDirectWithAdminRoom record' do
+        expect {
+          post url, params
+        }.not_to change(ChatDirectWithAdminRoom, :count)
+        room = ChatDirectWithAdminRoom.find_by(user_id: users['users'][0]['id'], admin_id: admin['admin']['id'])
+        expect(room).to be nil
+      end
     end
   end
 end

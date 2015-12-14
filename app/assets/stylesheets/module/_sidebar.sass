@@ -1,0 +1,53 @@
+$sidebar_border_color: #979797
+
+.sidebar
+
+  .status_zone
+    border-bottom: 1px solid $sidebar_border_color
+    padding: $default_space * 4
+
+  .status_heading
+    font-size: $font_size_default
+    margin-bottom: $default_space * 4
+
+  .profile_img
+    background-color: $white_color
+    +circle($default_space * 10)
+    +vertical-center
+
+  .account_info
+    color: $sub_font_color
+    font-size: $font_size_small
+    padding-left: $default_space * 2
+    width: $default_space * 31
+    +vertical-center
+
+  .menu
+    +vertical-center
+
+  .account_status
+    display: table
+    padding-top: $default_space
+
+  .status_icon
+    background-color: $status_color
+    margin-top: $default_space - 3
+    +circle($default_space * 2)
+
+  .status_title
+    color: $status_color
+    font-size: $font_size_micro
+    padding-left: $default_space
+    +vertical-center
+
+  .list
+    padding: $default_space * 4 0
+    border-bottom: 1px solid $sidebar_border_color
+
+  .item
+    line-height: $default_space * 9
+    font-size: $font_size_default
+    padding-left: $default_space * 10
+    &:hover
+      background-color: $filter_color
+      

@@ -8,7 +8,12 @@ GIT
       compass (~> 1.0.0)
       sass-rails (< 5.1)
       sprockets (< 4.0)
+<<<<<<< HEAD
 =======
+=======
+
+GIT
+>>>>>>> e8b1389... finish stepbar first step
   remote: git://github.com/capistrano/rbenv.git
   revision: 6f1216cfe0a6b4ac23ca4eaf8acf012e8165d247
   specs:
@@ -183,6 +188,8 @@ GEM
     fog-xml (0.1.1)
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
+    font-awesome-rails (4.5.0.0)
+      railties (>= 3.2, < 5.0)
     formatador (0.2.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -452,7 +459,6 @@ PLATFORMS
 DEPENDENCIES
   annotate
   autodoc
-  autoprefixer-rails
   awesome_print
   bootstrap-sass
   bullet
@@ -468,6 +474,7 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails
   fog
+  font-awesome-rails
   grape
   grape-rabl
   grape-swagger

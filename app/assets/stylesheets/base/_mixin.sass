@@ -18,3 +18,13 @@
 
 =static
   +position(static)
+
+// 正方形
+=square($size)
+  height: $size
+  width: $size
+
+// 正円形
+=circle($size)
+  border-radius: $size / 2
+  +square($size)
