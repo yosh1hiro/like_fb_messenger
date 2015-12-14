@@ -13,23 +13,24 @@ describe FiChat::Member::Admin do
   end
 
   describe '.find' do
-    it 'admin instance is created' do
+    before do
       allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
         .with(:get,
               "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/#{admin['admin']['id']}",
               { access_token: access_token, application_token: RequlMobileAdminsApi::APPLICATION_TOKEN })
         .and_return(admin)
-      member = FiChat::Member::Admin.find(admin['admin']['id'], access_token)
-      expect(member).to be_instance_of(FiChat::Member::Admin)
-      expect(member.id).to eq admin['admin']['id']
-      expect(member.first_name).to eq admin['admin']['first_name']
-      expect(member.last_name).to eq admin['admin']['last_name']
     end
+    subject(:member) { FiChat::Member::Admin.find(admin['admin']['id'], access_token) }
+    it { expect(member).to be_instance_of(FiChat::Member::Admin) }
+    it { expect(member.id).to eq admin['admin']['id'] }
+    it { expect(member.first_name).to eq admin['admin']['first_name'] }
+    it { expect(member.last_name).to eq admin['admin']['last_name'] }
   end
 
   describe '.find_list' do
+    subject(:members) { FiChat::Member::Admin.find_list([admins['admins'][0]['id'], admins['admins'][1]['id']], access_token) }
     context 'request admin_ids are exist' do
-      it 'admin instances are created' do
+      before do
         allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
           .with(:get,
                 "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/list",
@@ -39,21 +40,20 @@ describe FiChat::Member::Admin do
                   application_token: RequlMobileAdminsApi::APPLICATION_TOKEN
                 })
           .and_return(admins)
-        members = FiChat::Member::Admin.find_list([admins['admins'][0]['id'], admins['admins'][1]['id']], access_token)
-        expect(members).to be_instance_of(Array)
-        expect(members.size).to eq 2
-        expect(members[0]).to be_instance_of(FiChat::Member::Admin)
-        expect(members[0].id).to eq admins['admins'][0]['id']
-        expect(members[0].first_name).to eq admins['admins'][0]['first_name']
-        expect(members[0].last_name).to eq admins['admins'][0]['last_name']
-        expect(members[1]).to be_instance_of(FiChat::Member::Admin)
-        expect(members[1].id).to eq admins['admins'][1]['id']
-        expect(members[1].first_name).to eq admins['admins'][1]['first_name']
-        expect(members[1].last_name).to eq admins['admins'][1]['last_name']
       end
+      it { should be_instance_of(Array) }
+      it { expect(members.size).to eq 2 }
+      it { expect(members[0]).to be_instance_of(FiChat::Member::Admin) }
+      it { expect(members[0].id).to eq admins['admins'][0]['id'] }
+      it { expect(members[0].first_name).to eq admins['admins'][0]['first_name'] }
+      it { expect(members[0].last_name).to eq admins['admins'][0]['last_name'] }
+      it { expect(members[1]).to be_instance_of(FiChat::Member::Admin) }
+      it { expect(members[1].id).to eq admins['admins'][1]['id'] }
+      it { expect(members[1].first_name).to eq admins['admins'][1]['first_name'] }
+      it { expect(members[1].last_name).to eq admins['admins'][1]['last_name'] }
     end
     context 'request admin_id are not exist neither' do
-      it 'admin instance are not created' do
+      before do
         allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
           .with(:get,
                 "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/list",
@@ -63,10 +63,9 @@ describe FiChat::Member::Admin do
                   application_token: RequlMobileAdminsApi::APPLICATION_TOKEN
                 })
           .and_return({ 'admins' => [] })
-        members = FiChat::Member::Admin.find_list([admins['admins'][0]['id'], admins['admins'][1]['id']], access_token)
-        expect(members).to be_instance_of(Array)
-        expect(members.size).to eq 0
       end
+      it { should be_instance_of(Array) }
+      it { expect(members.size).to eq 0 }
     end
   end
 end
