@@ -12,6 +12,20 @@ describe RequlMobileAdminsApi do
     }
   end
 
+  describe '.me' do
+    context 'valid access_token is used' do
+      it 'response has admin' do
+        allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
+          .with(:get,
+                "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/me",
+                { access_token: access_token, application_token: RequlMobileAdminsApi::APPLICATION_TOKEN })
+          .and_return(admin)
+        ret = RequlMobileAdminsApi.new(access_token).me
+        expect(ret).to eq admin['admin']
+      end
+    end
+  end
+
   describe '.admin_info' do
     context 'request admin_id is exist' do
       it 'response has admin' do

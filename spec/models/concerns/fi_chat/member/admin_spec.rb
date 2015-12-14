@@ -12,6 +12,21 @@ describe FiChat::Member::Admin do
     }
   end
 
+  describe '.me' do
+    before do
+      allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
+        .with(:get,
+              "#{RequlMobileAdminsApi::INTERNAL_BASE_URL}/v1/admins/me",
+              { access_token: access_token, application_token: RequlMobileAdminsApi::APPLICATION_TOKEN })
+        .and_return(admin)
+    end
+    subject(:member) { FiChat::Member::Admin.me(access_token) }
+    it { should be_instance_of(FiChat::Member::Admin) }
+    it { expect(member.id).to eq admin['admin']['id'] }
+    it { expect(member.first_name).to eq admin['admin']['first_name'] }
+    it { expect(member.last_name).to eq admin['admin']['last_name'] }
+  end
+
   describe '.find' do
     before do
       allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
@@ -21,7 +36,7 @@ describe FiChat::Member::Admin do
         .and_return(admin)
     end
     subject(:member) { FiChat::Member::Admin.find(admin['admin']['id'], access_token) }
-    it { expect(member).to be_instance_of(FiChat::Member::Admin) }
+    it { should be_instance_of(FiChat::Member::Admin) }
     it { expect(member.id).to eq admin['admin']['id'] }
     it { expect(member.first_name).to eq admin['admin']['first_name'] }
     it { expect(member.last_name).to eq admin['admin']['last_name'] }
