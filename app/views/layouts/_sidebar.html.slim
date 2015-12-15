@@ -13,13 +13,13 @@
           .status_title.cell
             |受付中
       .menu.cell
-        = fa_icon "angle-down", class: "fa-2x"
+        = fa_icon 'angle-down', class: 'fa-2x'
   .list
     .item
-      |ユーザーリスト
+      = link_to "ユーザーリスト"
     .item
-      |各種設定
+      = link_to "各種設定", class: "item"
     .item
-      |通知設定
+      = link_to "通知設定", class: "item"
     .item
-      |定型分の追加
+      = link_to "定型文の追加", class: "item"

@@ -3,15 +3,12 @@
   font-size: $font_size_default
 
   .profile
-    border-bottom: 1px solid $sidebar_hover_color
+    border-bottom: 1px solid $sidebar_decorate_color
     padding: $default_space * 4
 
   .heading
     color: $white_color
     margin-bottom: $default_space * 4
-
-  .cell
-    +vertical-center
 
   .img
     background-color: $white_color
@@ -26,10 +23,13 @@
     display: table
     padding-top: $default_space
 
+  .cell
+    +vertical-center
+
   .status_icon
     background-color: $status_color
     margin:
-      top: $default_space - 3
+      top: 1px
       right: $default_space
     +circle($default_space * 2)
 
@@ -38,12 +38,10 @@
     font-size: $font_size_micro
 
   .list
-    border-bottom: 1px solid $sidebar_hover_color
+    border-bottom: 1px solid $sidebar_decorate_color
     padding: $default_space * 4 0
 
   .item
-    line-height: $default_space * 9
-    padding-left: $default_space * 5
-    &:hover
-      color: $white_color
-      background-color: $sidebar_hover_color
+    padding: $default_space * 5 $default_space * 3
+    +link-background-colors($normal: false, $hover: $sidebar_decorate_color)
+    +link-colors($normal: false, $hover: $white_color)

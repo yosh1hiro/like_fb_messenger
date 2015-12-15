@@ -19,6 +19,24 @@
 =static
   +position(static)
 
+=link-background-colors($normal: $white_color, $hover: false, $active: false, $visited: false, $focus: false, $is_active: false)
+  background-color: $normal
+  @if $visited
+    &:visited
+      background-color: $visited
+  @if $focus
+    &:focus
+      background-color: $focus
+  @if $hover
+    &:hover
+      background-color: $hover
+  @if $active
+    &:active
+      background-color: $active
+  @if $is_active
+    &.active
+      background-color: $is_active
+
 // 正方形
 =square($size)
   height: $size
