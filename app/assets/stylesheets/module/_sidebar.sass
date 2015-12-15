@@ -1,53 +1,52 @@
-$sidebar_border_color: #979797
+$sidebar_hover_color: rgba($filter_color, 0.1)
 
 .sidebar
 
-  .status_zone
-    border-bottom: 1px solid $sidebar_border_color
+  .profile
+    border-bottom: 1px solid $sidebar_hover_color
     padding: $default_space * 4
 
-  .status_heading
+  .heading
     font-size: $font_size_default
     margin-bottom: $default_space * 4
 
-  .profile_img
-    background-color: $white_color
-    +circle($default_space * 10)
+  .cell
     +vertical-center
 
-  .account_info
+  .img
+    background-color: $white_color
+    +circle($default_space * 10)
+
+  .info
     color: $sub_font_color
     font-size: $font_size_small
     padding-left: $default_space * 2
     width: $default_space * 31
-    +vertical-center
 
-  .menu
-    +vertical-center
-
-  .account_status
+  .status
     display: table
     padding-top: $default_space
 
   .status_icon
     background-color: $status_color
-    margin-top: $default_space - 3
+    margin:
+      top: $default_space - 3
+      right: $default_space
     +circle($default_space * 2)
 
   .status_title
     color: $status_color
     font-size: $font_size_micro
-    padding-left: $default_space
-    +vertical-center
 
   .list
+    border-bottom: 1px solid $sidebar_hover_color
     padding: $default_space * 4 0
-    border-bottom: 1px solid $sidebar_border_color
 
   .item
-    line-height: $default_space * 9
+    color: $sub_font_color
     font-size: $font_size_default
-    padding-left: $default_space * 10
+    line-height: $default_space * 9
+    padding-left: $default_space * 5
     &:hover
-      background-color: $filter_color
-      
+      color: $white_color
+      background-color: $sidebar_hover_color
