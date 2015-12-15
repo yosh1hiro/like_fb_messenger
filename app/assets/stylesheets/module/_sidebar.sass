@@ -1,13 +1,13 @@
-$sidebar_hover_color: rgba($filter_color, 0.1)
-
 .sidebar
+  color: $sub_font_color
+  font-size: $font_size_default
 
   .profile
     border-bottom: 1px solid $sidebar_hover_color
     padding: $default_space * 4
 
   .heading
-    font-size: $font_size_default
+    color: $white_color
     margin-bottom: $default_space * 4
 
   .cell
@@ -18,7 +18,6 @@ $sidebar_hover_color: rgba($filter_color, 0.1)
     +circle($default_space * 10)
 
   .info
-    color: $sub_font_color
     font-size: $font_size_small
     padding-left: $default_space * 2
     width: $default_space * 31
@@ -43,8 +42,6 @@ $sidebar_hover_color: rgba($filter_color, 0.1)
     padding: $default_space * 4 0
 
   .item
-    color: $sub_font_color
-    font-size: $font_size_default
     line-height: $default_space * 9
     padding-left: $default_space * 5
     &:hover
