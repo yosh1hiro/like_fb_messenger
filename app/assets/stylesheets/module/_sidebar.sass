@@ -19,23 +19,15 @@
     padding-left: $default_space * 2
     width: $default_space * 31
 
-  .status
-    display: table
-    padding-top: $default_space
-
   .cell
     +vertical-center
 
-  .status_icon
-    background-color: $status_color
-    margin:
-      top: 1px
-      right: $default_space
-    +circle($default_space * 2)
-
-  .status_title
+  .status
     color: $status_color
     font-size: $font_size_micro
+    padding-top: $default_space
+    &:before
+      content: "●"
 
   .list
     border-bottom: 1px solid $sidebar_decorate_color
