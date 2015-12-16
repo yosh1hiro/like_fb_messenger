@@ -15,6 +15,7 @@ module Public
       mount Public::V1::Users
       mount Public::V1::Admins
       mount Public::V1::Admins::Rooms
+      mount Public::V1::Admins::Posts
 
       mount Public::V1::WithAdmin::Posts
       mount Public::V1::WithAdmin::Rooms

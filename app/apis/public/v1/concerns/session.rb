@@ -17,6 +17,14 @@ module Public
             def authenticate_user!
               fail ActionController::BadRequest if current_user.nil?
             end
+
+            def current_admin
+              @current_admin ||= FiChat::Member::Admin.me(access_token)
+            end
+
+            def authenticate_admin!
+              fail ActionController::BadRequest if current_admin.nil?
+            end
           end
         end
       end
