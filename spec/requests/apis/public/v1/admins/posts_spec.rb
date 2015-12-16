@@ -44,7 +44,7 @@ describe Public::V1::Admins::Posts, type: :request do
       let(:params) { { content_type: 'message', room_id: chat_room.id, message: message, access_token: access_token } }
       context 'message is present' do
         let(:message) { 'chat message' }
-        it 'returns status code 200' do
+        it 'returns status code 201' do
           post url, params
           expect(response.status).to eq 201
         end
@@ -96,7 +96,7 @@ describe Public::V1::Admins::Posts, type: :request do
       let(:params) { { content_type: 'stamp', room_id: chat_room.id, stamp_id: stamp_id, access_token: access_token } }
       context 'stamp_id is present' do
         let(:stamp_id) { 1 }
-        it 'returns status code 200' do
+        it 'returns status code 201' do
           post url, params
           expect(response.status).to eq 201
         end
@@ -138,6 +138,63 @@ describe Public::V1::Admins::Posts, type: :request do
       end
       context 'stamp_id is blank' do
         let(:stamp_id) { nil }
+        before do
+          post url, params
+        end
+        it { expect(response.status).to eq 400 }
+      end
+    end
+    context 'content_type is image' do
+      let(:params) { { content_type: 'image', room_id: chat_room.id, image: image, access_token: access_token } }
+      context 'image is present' do
+        let(:image) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'support', 'images', 'finc_logo.jpg'), 'image/jpeg') }
+        it 'returns status code 201' do
+          post url, params
+          expect(response.status).to eq 201
+        end
+        it 'creates ChatDirectWithAdminFromAdminImage record' do
+          expect {
+            post url, params
+          }.to change(ChatDirectWithAdminFromAdminImage, :count).by(1)
+          post = ChatDirectWithAdminFromAdminImage.find_by(chat_direct_with_admin_room: chat_room)
+          expect(post).to be_truthy
+          # TODO: compare file content.
+          # Probably ImageUploader convert image, so image file is changed.
+          expect(post.image.file.to_file.path.gsub(/\/.+\//,'')).to eq image.original_filename
+        end
+        it 'creates ChatPostCache record' do
+          expect {
+            post url, params
+          }.to change(ChatPostCache, :count).by(1)
+          post_cache = ChatPostCache.find_by(chat_room: chat_room, sender_id: admin['admin']['id'], sender_type: 'Admin')
+          post = ChatDirectWithAdminFromAdminImage.find_by(chat_direct_with_admin_room: chat_room)
+          expect(post_cache).to be_truthy
+          # TODO: compare file content.
+          # Probably ImageUploader convert image, so image file is changed.
+          expect(post_cache.image.file.to_file.path.gsub(/\/.+\//,'')).to eq post.image.file.to_file.path.gsub(/\/.+\//,'')
+          expect(post_cache.posted_at).to eq post.created_at
+        end
+        it 'updates ChatRoomIndexCache record' do
+          post url, params
+          room_cache = ChatRoomIndexCache.find_by(chat_room: chat_room)
+          post = ChatDirectWithAdminFromAdminImage.find_by(chat_direct_with_admin_room: chat_room)
+          expect(room_cache.last_sent_message).to eq I18n.t('chat_room_index_cache.last_sent_message_template.image_sent', name: admin['admin']['name'])
+          expect(room_cache.last_sent_at).to eq post.created_at
+        end
+        it 'returns json response' do
+          post url, params
+          post_cache = ChatPostCache.find_by(chat_room: chat_room, sender_id: admin['admin']['id'], sender_type: 'Admin')
+          expect(json['chat_post']['postable_type']).to eq 'ChatDirectWithAdminFromAdminImage'
+          expect(json['chat_post']['image']['image']['url']).to eq "/uploads/chat_post_cache/image/#{post_cache.id}/#{image.original_filename}"
+          expect(json['chat_post']['chat_room_id']).to eq chat_room.id
+          expect(json['chat_post']['sender']['id']).to eq admin['admin']['id']
+          expect(json['chat_post']['sender']['last_name']).to eq admin['admin']['last_name']
+          expect(json['chat_post']['sender']['first_name']).to eq admin['admin']['first_name']
+          expect(json['chat_post']['sender']['type']).to eq 'Admin'
+        end
+      end
+      context 'image is blank' do
+        let(:image) { nil }
         before do
           post url, params
         end
