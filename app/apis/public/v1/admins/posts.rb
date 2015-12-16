@@ -48,6 +48,9 @@ module Public
               @chat_post = create_chat_post_cache!(chat_post)
             when 'image'
               fail ActionController::BadRequest if params[:image].blank?
+              chat_post = chat_room.chat_direct_with_admin_from_admin_images.new(chat_post_params)
+              chat_post.image = params[:image]
+              @chat_post = create_chat_post_cache!(chat_post)
             else
               fail ActionController::BadRequest
             end

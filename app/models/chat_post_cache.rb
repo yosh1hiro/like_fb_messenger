@@ -30,4 +30,5 @@ class ChatPostCache < ActiveRecord::Base
   belongs_to :postable, polymorphic: true
   belongs_to :chat_room, polymorphic: true
 
+  mount_uploader :image, ImageUploader
 end
