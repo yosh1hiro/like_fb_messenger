@@ -78,6 +78,9 @@ module Public
         end
 
         namespace :with_csc do
+          params do
+            optional :access_token, type: String
+          end
           desc 'Start direct chat with CSC'
           post '/rooms', rabl: 'public/v1/rooms/create' do
             csc = FiChat::Member::Admin.new({ 'id' => 20120410, 'last_name' => 'customer', 'first_name' => 'support' }) # TODO: implement
