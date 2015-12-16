@@ -16,7 +16,6 @@
 FactoryGirl.define do
   factory :chat_direct_with_admin_room do
     user_id 1
-admin_id 1
+    admin_id 1
   end
-
 end
