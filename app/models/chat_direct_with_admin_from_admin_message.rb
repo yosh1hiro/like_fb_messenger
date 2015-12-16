@@ -34,6 +34,7 @@ class ChatDirectWithAdminFromAdminMessage < ActiveRecord::Base
       message: message,
       posted_at: created_at,
     ).save!
+    chat_post_cache.sender = sender
   end
 
   def update_room_cache!

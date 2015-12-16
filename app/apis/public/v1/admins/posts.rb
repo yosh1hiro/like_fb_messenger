@@ -20,6 +20,12 @@ module Public
               ActionController::Parameters.new(params) \
                 .permit(:stamp_id, :message)
             end
+
+            def create_chat_post_cache!(chat_post)
+              chat_post.sender = current_admin
+              chat_post.save_with_cache!
+              chat_post.chat_post_cache
+            end
           end
 
           desc 'Create a new message'
@@ -34,9 +40,8 @@ module Public
             case params[:content_type]
             when 'message'
               fail ActionController::BadRequest if params[:message].blank?
-              @chat_post = chat_room.chat_direct_with_admin_from_admin_messages.new(chat_post_params)
-              @chat_post.sender = current_admin
-              @chat_post.save_with_cache!
+              chat_post = chat_room.chat_direct_with_admin_from_admin_messages.new(chat_post_params)
+              @chat_post = create_chat_post_cache!(chat_post)
             when 'stamp'
               fail ActionController::BadRequest if params[:stamp_id].blank?
             when 'image'

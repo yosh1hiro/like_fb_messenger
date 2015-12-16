@@ -75,6 +75,7 @@ describe Public::V1::Admins::Posts, type: :request do
         end
         it 'returns json response' do
           post url, params
+          expect(json['chat_post']['postable_type']).to eq 'ChatDirectWithAdminFromAdminMessage'
           expect(json['chat_post']['message']).to eq message
           expect(json['chat_post']['chat_room_id']).to eq chat_room.id
           expect(json['chat_post']['sender']['id']).to eq admin['admin']['id']
