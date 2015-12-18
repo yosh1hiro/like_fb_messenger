@@ -43,8 +43,8 @@ describe FiChat::Member::Admin do
   end
 
   describe '.find_list' do
-    subject(:members) { FiChat::Member::Admin.find_list([admins['admins'][0]['id'], admins['admins'][1]['id']], access_token) }
     context 'request admin_ids are exist' do
+      subject(:members) { FiChat::Member::Admin.find_list([admins['admins'][0]['id'], admins['admins'][1]['id']], access_token) }
       before do
         allow_any_instance_of(RequlMobileAdminsApi).to receive(:request)
           .with(:get,
@@ -79,8 +79,11 @@ describe FiChat::Member::Admin do
                 })
           .and_return({ 'admins' => [] })
       end
-      it { should be_instance_of(Array) }
-      it { expect(members.size).to eq 0 }
+      it 'raise error' do
+        expect {
+          FiChat::Member::Admin.find_list([admins['admins'][0]['id'], admins['admins'][1]['id']], access_token)
+        }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end
