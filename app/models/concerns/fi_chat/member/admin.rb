@@ -5,6 +5,10 @@ module FiChat
         'Admin'
       end
 
+      def direct_admin_chat_rooms
+        ChatDirectWithAdminRoom.where(admin_id: id)
+      end
+
       class << self
         def me(access_token)
           me = RequlMobileAdminsApi.new(access_token).me
