@@ -59,7 +59,7 @@ module Public
                 @chat_room = s.chat_direct_room
                 @chat_posts = s.chat_posts
                 @members = s.members
-                @end_flag = (@chat_rooms.count != params[:count])
+                @end_flag = (@chat_posts.count != params[:count])
               end
 
               desc 'Show recently posts after parameter date'
