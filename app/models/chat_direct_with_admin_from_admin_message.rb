@@ -27,14 +27,17 @@ class ChatDirectWithAdminFromAdminMessage < ActiveRecord::Base
   end
 
   def cache!
-    build_chat_post_cache(
+    cache = ChatPostCache.new(
       chat_room: chat_direct_with_admin_room,
+      postable: self,
       sender_id: sender.id,
       sender_type: sender.type,
       message: message,
-      posted_at: created_at,
-    ).save!
-    chat_post_cache.sender = sender
+      posted_at: created_at
+    )
+    cache.sender = sender
+    cache.save!
+    true
   end
 
   def update_room_cache!
