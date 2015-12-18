@@ -37,6 +37,24 @@ module Public
             fail ActionController::BadRequest if user.blank?
             @chat_room = ChatDirectWithAdminRoom.find_or_create_by(user, current_admin)
           end
+
+          route_param :room_id do
+            desc 'Get direct chat_room info'
+            params do
+              requires :room_id, type: Integer
+              optional :page, type: Integer, default: 1
+              optional :count, type: Integer, default: 20
+            end
+            get '/', rabl: 'public/v1/rooms/show' do
+              @page = params[:page]
+              @next_page = @page + 1
+              s = ::Admin::ChatDirectRoomPostService.new(access_token, params[:room_id], params[:page], params[:count])
+              @chat_room = s.chat_direct_room
+              @chat_posts = s.chat_posts
+              @members = s.members
+              @end_flag = @chat_posts.count != params[:count]
+            end
+          end
         end
       end
     end
