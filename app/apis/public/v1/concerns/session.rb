@@ -6,8 +6,8 @@ module Public
         included do
           helpers do
             def access_token
-              @access_token ||= request.env['HTTP_AUTHORIZATION'].try(:match, /Bearer\s(.+)/).try(:[], 1)
-              @access_token ||= params[:access_token]
+              return @access_token if @access_token.present?
+              @access_token = request.env['HTTP_AUTHORIZATION'].try(:gsub, /^Bearer /, '').presence || params[:access_token]
             end
 
             def current_user
