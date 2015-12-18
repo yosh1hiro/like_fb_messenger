@@ -16,7 +16,7 @@
 FactoryGirl.define do
   factory :chat_direct_with_admin_stamp do
     stamp_id 1
-chat_direct_with_admin_room nil
+    chat_direct_with_admin_room nil
   end
 
 end

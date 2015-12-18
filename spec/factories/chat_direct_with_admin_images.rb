@@ -16,7 +16,7 @@
 FactoryGirl.define do
   factory :chat_direct_with_admin_image do
     image "MyString"
-chat_direct_with_admin_room nil
+    chat_direct_with_admin_room nil
   end
 
 end

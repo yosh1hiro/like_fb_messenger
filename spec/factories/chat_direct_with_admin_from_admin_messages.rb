@@ -15,7 +15,7 @@
 
 FactoryGirl.define do
   factory :chat_direct_with_admin_from_admin_message do
-    message "MyText"
+    sequence(:message) { |n| "MyText#{n}" }
     chat_direct_with_admin_room nil
   end
 
