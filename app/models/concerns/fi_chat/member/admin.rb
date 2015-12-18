@@ -18,6 +18,7 @@ module FiChat
 
         def find_list(ids, access_token)
           admins = RequlMobileAdminsApi.new(access_token).admins(ids)
+          fail ActiveRecord::RecordNotFound if admins['admins'].blank?
           Array(admins['admins']).map { |a| ::FiChat::Member::Admin.new(a) }
         end
       end

@@ -22,6 +22,7 @@ module FiChat
 
         def find_list(ids)
           users = RequlMobileUsersApi.users(ids)
+          fail ActiveRecord::RecordNotFound if users['users'].blank?
           Array(users['users']).map { |u| ::FiChat::Member::User.new(u) }
         end
 
