@@ -7,7 +7,7 @@ child(@chat_room, root: :chat_room) do
   end
   if @chat_posts.present?
     child(@chat_posts, root: :posts, object_root: false) do
-      attributes :id, :postable_type, :message, :stamp_id, :image, :stamp_image, :posted_at, :sender_type, :sender_id
+      attributes :postable_id, :postable_type, :message, :stamp_id, :image, :stamp_image, :posted_at, :sender_type, :sender_id
 
       child(:sender, root: :sender) do
         extends 'public/v1/members/_attributes'
