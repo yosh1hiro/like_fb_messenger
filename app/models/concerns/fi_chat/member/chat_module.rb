@@ -7,7 +7,7 @@ module FiChat
       end
 
       def direct_admin_chat_rooms
-        ChatDirectWithAdminRoom.where(user_id: id)  # self.idはerrorでるかも。未確認
+        ChatDirectWithAdminRoom.where("#{type}_id".to_sym => id)  # self.idはerrorでるかも。未確認
       end
 
       def chat_room_index_caches
