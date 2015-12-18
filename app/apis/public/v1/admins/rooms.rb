@@ -23,6 +23,11 @@ module Public
         end
 
         resources :rooms do
+          desc 'Get direct chat_room list of admin'
+          get '/mine', rabl: 'public/v1/admins/rooms/index' do
+            @chat_rooms = current_admin.chat_room_with_admin_index_caches
+          end
+
           desc 'Start direct chat'
           params do
             requires :user_id, type: Integer
